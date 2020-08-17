@@ -28,8 +28,8 @@ import UIKit
       if let data = data, error == nil {
         debugPrint("Got Verify OTP response - \(data)")
         success(self.parseResponse(data))
-      } else if let error = error {
-        failure(error.localizedDescription)
+      } else if let errorMessage = error {
+        failure(errorMessage)
       }
     }
   }

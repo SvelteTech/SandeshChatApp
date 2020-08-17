@@ -25,9 +25,9 @@ class CustomLoginModel: NSObject {
       if let data = data {
         debugPrint("Got login response - \(data)")
         completionHandler(parseData(data), nil)
-      } else if let error = error {
-        debugPrint("Error - \(error.localizedDescription)")
-        completionHandler(false, error.localizedDescription)
+      } else if let errorMessage = error {
+        debugPrint("Error - \(errorMessage)")
+        completionHandler(false, errorMessage)
       }
     }
   }

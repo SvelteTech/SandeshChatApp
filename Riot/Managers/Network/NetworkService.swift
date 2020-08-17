@@ -30,22 +30,22 @@ class NetworkManager: NSObject {
     print("Initalized the network manager instance")
   }
   
-  func sendPostRequest(urlString: String, parameters: [String :Any]?, completionHandler: @escaping(Data?, Error?) -> Void) {
-    // 1. Make URL from UrlString
-    let url = URL(string: urlString)
-    // 2. Create the URLRequest object
-    var urlRequest = URLRequest(url: url!)
-    // 3. Set httpMethod like POST, GET etc
-//    urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-    urlRequest.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
-    urlRequest.httpMethod = "POST"
-    if let parameters = parameters,
-      let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) {
-      // 4. Add if any parameter
-      urlRequest.httpBody = httpBody
+  func sendPostRequest(urlString: String, parameters: [String: Any]?, requestType: RequestType = .Post, completionHandler: @escaping(Data?, String?) -> Void) {
+    if let url = URL(string: urlString) {
+      var urlRequest = URLRequest(url: url)
+      urlRequest.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
+      urlRequest.httpMethod = requestType.rawValue
+      if let parameters = parameters,
+        let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) {
+        urlRequest.httpBody = httpBody
+      }
+      URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+        completionHandler(data, error?.localizedDescription)
+      }.resume()
+    } else {
+      let errorMessage = "Invalid URL"
+      debugPrint(errorMessage)
+      completionHandler(nil, errorMessage)
     }
-    URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-      completionHandler(data, error)
-    }.resume()
   }
 }
