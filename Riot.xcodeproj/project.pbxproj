@@ -725,6 +725,19 @@
 		B1E5368D21FB7245001F3AFF /* KeyBackupRecoverFromPassphraseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E5368C21FB7245001F3AFF /* KeyBackupRecoverFromPassphraseViewController.swift */; };
 		B1E5368F21FB7258001F3AFF /* KeyBackupRecoverFromPassphraseViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1E5368E21FB7258001F3AFF /* KeyBackupRecoverFromPassphraseViewController.storyboard */; };
 		B1FDF56021F5FE5500BA3834 /* KeyBackupSetupPassphraseViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FDF55F21F5FE5500BA3834 /* KeyBackupSetupPassphraseViewAction.swift */; };
+		D1110ADE24EA5D1E00B08FDB /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1110ADD24EA5D1E00B08FDB /* NetworkService.swift */; };
+		D1110AF124EA7C9400B08FDB /* VerifyOTPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1110AF024EA7C9400B08FDB /* VerifyOTPViewController.swift */; };
+		D1110AF324EA7CA600B08FDB /* VerifyOTP.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1110AF224EA7CA600B08FDB /* VerifyOTP.storyboard */; };
+		D1110AF524EA869700B08FDB /* VerifyOTPViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1110AF424EA869700B08FDB /* VerifyOTPViewModel.swift */; };
+		D1110AFA24EA9C5A00B08FDB /* CustomLoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1110AF924EA9C5A00B08FDB /* CustomLoginModel.swift */; };
+		D1110AFB24EAA16D00B08FDB /* CustomLoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1110AF924EA9C5A00B08FDB /* CustomLoginModel.swift */; };
+		D1110AFC24EAA19500B08FDB /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1110ADD24EA5D1E00B08FDB /* NetworkService.swift */; };
+		D1110AFD24EAA1A000B08FDB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC85D753247C0F5B002C44C9 /* Constants.swift */; };
+		D1110AFF24EADE1500B08FDB /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1110AFE24EADE1500B08FDB /* ActivityIndicator.swift */; };
+		D1F5467424EAE8D900A40E38 /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F5466F24EAE8D900A40E38 /* PinView.swift */; };
+		D1F5467524EAE8D900A40E38 /* PinField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F5467024EAE8D900A40E38 /* PinField.swift */; };
+		D1F5467624EAE8D900A40E38 /* PinCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1F5467224EAE8D900A40E38 /* PinCell.xib */; };
+		D1F5467724EAE8D900A40E38 /* PinView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1F5467324EAE8D900A40E38 /* PinView.xib */; };
 		DB1392A2332C3CAF6C9962EF /* Pods_RiotPods_RiotNSE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4D418D054E4032F2CFA8B51 /* Pods_RiotPods_RiotNSE.framework */; };
 		EC1CA85F24C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA85124C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift */; };
 		EC1CA86024C1DEC400DE9EBF /* EnterPinCodeViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA85224C1DEC400DE9EBF /* EnterPinCodeViewAction.swift */; };
@@ -1842,6 +1855,16 @@
 		B1FDF55F21F5FE5500BA3834 /* KeyBackupSetupPassphraseViewAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBackupSetupPassphraseViewAction.swift; sourceTree = "<group>"; };
 		B43DC75D1590BB8A4243BD4D /* Pods-RiotPods-Riot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiotPods-Riot.release.xcconfig"; path = "Target Support Files/Pods-RiotPods-Riot/Pods-RiotPods-Riot.release.xcconfig"; sourceTree = "<group>"; };
 		BABB6681FBD79219B1213D6C /* Pods-RiotTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiotTests.debug.xcconfig"; path = "Target Support Files/Pods-RiotTests/Pods-RiotTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D1110ADD24EA5D1E00B08FDB /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		D1110AF024EA7C9400B08FDB /* VerifyOTPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyOTPViewController.swift; sourceTree = "<group>"; };
+		D1110AF224EA7CA600B08FDB /* VerifyOTP.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = VerifyOTP.storyboard; sourceTree = "<group>"; };
+		D1110AF424EA869700B08FDB /* VerifyOTPViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyOTPViewModel.swift; sourceTree = "<group>"; };
+		D1110AF924EA9C5A00B08FDB /* CustomLoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLoginModel.swift; sourceTree = "<group>"; };
+		D1110AFE24EADE1500B08FDB /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		D1F5466F24EAE8D900A40E38 /* PinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
+		D1F5467024EAE8D900A40E38 /* PinField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinField.swift; sourceTree = "<group>"; };
+		D1F5467224EAE8D900A40E38 /* PinCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinCell.xib; sourceTree = "<group>"; };
+		D1F5467324EAE8D900A40E38 /* PinView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinView.xib; sourceTree = "<group>"; };
 		E2599D0ECB8DD206624E450B /* Pods-RiotPods-SiriIntents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiotPods-SiriIntents.release.xcconfig"; path = "Target Support Files/Pods-RiotPods-SiriIntents/Pods-RiotPods-SiriIntents.release.xcconfig"; sourceTree = "<group>"; };
 		E4D418D054E4032F2CFA8B51 /* Pods_RiotPods_RiotNSE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RiotPods_RiotNSE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC1CA85124C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPinCodeViewModelType.swift; sourceTree = "<group>"; };
@@ -3153,6 +3176,8 @@
 		B1B5567620EE6C4C00210D55 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				D1110AF824EA9C4000B08FDB /* CustomLogin */,
+				D1110ADC24EA5CBA00B08FDB /* VerifyOTP */,
 				EC1CA84F24C1DEC400DE9EBF /* SetPinCode */,
 				EC3B066324AC6ADD000DF9BF /* CrossSigning */,
 				EC711BB424A63C11008F830C /* AuthenticatedSession */,
@@ -4230,6 +4255,7 @@
 		B1B5597C20EFC3DF00210D55 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				D1110ADB24EA5CA800B08FDB /* Network */,
 				EC1CA87824C8840B00DE9EBF /* LocalAuthentication */,
 				EC1CA87324C8257F00DE9EBF /* KeyValueStorage */,
 				B185145324B7CF9500EE19EA /* AppVersion */,
@@ -4550,6 +4576,60 @@
 				B1107EC62200B0190038014B /* Success */,
 			);
 			path = Recover;
+			sourceTree = "<group>";
+		};
+		D1110ADB24EA5CA800B08FDB /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				D1110ADD24EA5D1E00B08FDB /* NetworkService.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		D1110ADC24EA5CBA00B08FDB /* VerifyOTP */ = {
+			isa = PBXGroup;
+			children = (
+				D1F5466D24EAE8D900A40E38 /* PinView */,
+				D1110AF024EA7C9400B08FDB /* VerifyOTPViewController.swift */,
+				D1110AF224EA7CA600B08FDB /* VerifyOTP.storyboard */,
+				D1110AF424EA869700B08FDB /* VerifyOTPViewModel.swift */,
+			);
+			path = VerifyOTP;
+			sourceTree = "<group>";
+		};
+		D1110AF824EA9C4000B08FDB /* CustomLogin */ = {
+			isa = PBXGroup;
+			children = (
+				D1110AF924EA9C5A00B08FDB /* CustomLoginModel.swift */,
+			);
+			path = CustomLogin;
+			sourceTree = "<group>";
+		};
+		D1F5466D24EAE8D900A40E38 /* PinView */ = {
+			isa = PBXGroup;
+			children = (
+				D1F5466E24EAE8D900A40E38 /* Classes */,
+				D1F5467124EAE8D900A40E38 /* XIB's */,
+			);
+			path = PinView;
+			sourceTree = "<group>";
+		};
+		D1F5466E24EAE8D900A40E38 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				D1F5466F24EAE8D900A40E38 /* PinView.swift */,
+				D1F5467024EAE8D900A40E38 /* PinField.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		D1F5467124EAE8D900A40E38 /* XIB's */ = {
+			isa = PBXGroup;
+			children = (
+				D1F5467224EAE8D900A40E38 /* PinCell.xib */,
+				D1F5467324EAE8D900A40E38 /* PinView.xib */,
+			);
+			path = "XIB's";
 			sourceTree = "<group>";
 		};
 		EC1CA84F24C1DEC400DE9EBF /* SetPinCode */ = {
@@ -5008,6 +5088,7 @@
 				B197B7C5243DE947005ABBF3 /* EncryptionTrustLevelBadgeImageHelper.swift */,
 				EC2B4EF024A1EEBD005EB739 /* DataProtectionHelper.swift */,
 				ECDC15F124AF41D2003437CF /* FormattedBodyParser.swift */,
+				D1110AFE24EADE1500B08FDB /* ActivityIndicator.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -5335,6 +5416,7 @@
 				B1B5579020EF568D00210D55 /* GroupTableViewCell.xib in Resources */,
 				B142317B22CCFA2000FFA96A /* EditHistoryCell.xib in Resources */,
 				B1B5581B20EF625800210D55 /* ExpandedRoomTitleView.xib in Resources */,
+				D1F5467724EAE8D900A40E38 /* PinView.xib in Resources */,
 				B1B558C220EF768F00210D55 /* RoomIncomingEncryptedTextMsgBubbleCell.xib in Resources */,
 				B1B558F620EF768F00210D55 /* RoomOutgoingTextMsgBubbleCell.xib in Resources */,
 				B1B5574D20EE6C4D00210D55 /* MediaPickerViewController.xib in Resources */,
@@ -5347,6 +5429,7 @@
 				329E746622CD02EA006F9797 /* BubbleReactionActionViewCell.xib in Resources */,
 				B1B558E320EF768F00210D55 /* RoomEmptyBubbleCell.xib in Resources */,
 				EC711B8F24A63B37008F830C /* SecretsRecoveryWithKeyViewController.storyboard in Resources */,
+				D1F5467624EAE8D900A40E38 /* PinCell.xib in Resources */,
 				B1E5368F21FB7258001F3AFF /* KeyBackupRecoverFromPassphraseViewController.storyboard in Resources */,
 				B1B5590420EF768F00210D55 /* RoomOutgoingAttachmentBubbleCell.xib in Resources */,
 				B1B558F120EF768F00210D55 /* RoomIncomingAttachmentWithPaginationTitleBubbleCell.xib in Resources */,
@@ -5425,6 +5508,7 @@
 				B1B5590720EF768F00210D55 /* RoomOutgoingTextMsgWithPaginationTitleWithoutSenderNameBubbleCell.xib in Resources */,
 				B169329920F39E6300746532 /* LaunchScreen.storyboard in Resources */,
 				B1B5595320EF9A8700210D55 /* RecentTableViewCell.xib in Resources */,
+				D1110AF324EA7CA600B08FDB /* VerifyOTP.storyboard in Resources */,
 				B1B557AD20EF5A6D00210D55 /* DeviceView.xib in Resources */,
 				B1B5573920EE6C4D00210D55 /* GroupRoomsViewController.xib in Resources */,
 				B1B5597620EFB02A00210D55 /* InviteRecentTableViewCell.xib in Resources */,
@@ -5660,7 +5744,9 @@
 				24EEE5A31F23A8C300B3C705 /* AvatarGenerator.m in Sources */,
 				32FD757224D2BEF700BA7B37 /* InfoPlist.swift in Sources */,
 				B1664BCF20F4E67600808783 /* ShareExtensionManager.m in Sources */,
+				D1110AFD24EAA1A000B08FDB /* Constants.swift in Sources */,
 				32FD756624D2AD5100BA7B37 /* BuildSettings.swift in Sources */,
+				D1110AFC24EAA19500B08FDB /* NetworkService.swift in Sources */,
 				B1DB4F0722301AF20065DBFA /* Character.swift in Sources */,
 				3209451321F1C1D50088CAA2 /* BlackTheme.swift in Sources */,
 				24EEE5A21F23A8B400B3C705 /* MXRoom+Riot.m in Sources */,
@@ -5674,6 +5760,7 @@
 				32242F0A21E8B21300725742 /* UIColor.swift in Sources */,
 				32242F1921E8FBFB00725742 /* DarkTheme.swift in Sources */,
 				B1664BC820F4E67600808783 /* ShareDataSource.m in Sources */,
+				D1110AFB24EAA16D00B08FDB /* CustomLoginModel.swift in Sources */,
 				B1DCC63522E72D2200625807 /* UISearchBar.swift in Sources */,
 				B1664BCD20F4E67600808783 /* RecentRoomTableViewCell.m in Sources */,
 				B1DB4F0C2231494F0065DBFA /* String.swift in Sources */,
@@ -5739,6 +5826,7 @@
 				B16932A520F3A21C00746532 /* empty.mm in Sources */,
 				3232AB4A2256558300AD6A5C /* FlowTemplateCoordinator.swift in Sources */,
 				B19EFA3B21F8BB4100FC070E /* KeyBackupRecoverCoordinator.swift in Sources */,
+				D1110AFA24EA9C5A00B08FDB /* CustomLoginModel.swift in Sources */,
 				B1B9DEDE22E9D9890065E677 /* EmojiServiceType.swift in Sources */,
 				EC1CA89724C9C9A200DE9EBF /* SetupBiometricsViewModelType.swift in Sources */,
 				3232ABA9225730E100AD6A5C /* DeviceVerificationStartViewModel.swift in Sources */,
@@ -5779,6 +5867,7 @@
 				32FD757624D2C9BA00BA7B37 /* Bundle.swift in Sources */,
 				B12D7A0023E2462200FACEDC /* UserVerificationStartCoordinatorType.swift in Sources */,
 				EC711B9324A63B37008F830C /* SecretsRecoveryWithKeyViewController.swift in Sources */,
+				D1110AF124EA7C9400B08FDB /* VerifyOTPViewController.swift in Sources */,
 				B1B5572220EE6C4D00210D55 /* RoomSettingsViewController.m in Sources */,
 				B1B5577320EE702800210D55 /* JitsiViewController.m in Sources */,
 				B169331620F3CAFC00746532 /* PublicRoomsDirectoryDataSource.m in Sources */,
@@ -5873,6 +5962,7 @@
 				B1B558C120EF768F00210D55 /* RoomIncomingEncryptedAttachmentWithPaginationTitleBubbleCell.m in Sources */,
 				B1B5573E20EE6C4D00210D55 /* RiotNavigationController.m in Sources */,
 				B1B5593B20EF7BAC00210D55 /* TableViewCellWithCheckBoxAndLabel.m in Sources */,
+				D1F5467524EAE8D900A40E38 /* PinField.swift in Sources */,
 				B1B5581A20EF625800210D55 /* ExpandedRoomTitleView.m in Sources */,
 				B1107EC82200B0720038014B /* KeyBackupRecoverSuccessViewController.swift in Sources */,
 				B1BEE74C23E093260003A4CB /* UserVerificationSessionStatusViewController.swift in Sources */,
@@ -6097,6 +6187,7 @@
 				32A6001922C661100042C1D9 /* EditHistoryViewModelType.swift in Sources */,
 				B1B5573B20EE6C4D00210D55 /* FavouritesViewController.m in Sources */,
 				B1C45A87232A8C2600165425 /* SettingsIdentityServerCoordinator.swift in Sources */,
+				D1F5467424EAE8D900A40E38 /* PinView.swift in Sources */,
 				B1B5579920EF575B00210D55 /* AuthInputsView.m in Sources */,
 				B1B5597520EFB02A00210D55 /* InviteRecentTableViewCell.m in Sources */,
 				B1B5571E20EE6C4D00210D55 /* ContactDetailsViewController.m in Sources */,
@@ -6189,6 +6280,7 @@
 				B1B336C4242B933700F95EC4 /* KeyVerificationSelfVerifyStartViewAction.swift in Sources */,
 				B1B4E9B924D46EB3004D5C33 /* SizingViewHeight.swift in Sources */,
 				B1B5590920EF768F00210D55 /* RoomEmptyBubbleCell.m in Sources */,
+				D1110AF524EA869700B08FDB /* VerifyOTPViewModel.swift in Sources */,
 				324A2054225FC571004FE8B0 /* DeviceVerificationIncomingCoordinatorType.swift in Sources */,
 				B139C21F21FE5D6600BB68EC /* KeyBackupRecoverFromPassphraseViewAction.swift in Sources */,
 				B1DCC61822E5E17100625807 /* EmojiPickerViewState.swift in Sources */,
@@ -6211,6 +6303,7 @@
 				323AB947232BD74600C1451F /* AuthFallBackViewController.m in Sources */,
 				B1C562E1228C7C8C0037F12A /* RoomContextualMenuToolbarView.swift in Sources */,
 				B1CE83DF2422817200D07506 /* KeyVerificationVerifyBySASCoordinatorType.swift in Sources */,
+				D1110ADE24EA5D1E00B08FDB /* NetworkService.swift in Sources */,
 				B1B557BF20EF5B4500210D55 /* DisabledRoomInputToolbarView.m in Sources */,
 				B1B5578620EF564900210D55 /* GroupTableViewCellWithSwitch.m in Sources */,
 				B1098BE821ECFE52000DDA48 /* Coordinator.swift in Sources */,
@@ -6235,6 +6328,7 @@
 				EC1CA87A24C8841C00DE9EBF /* LocalAuthenticationService.swift in Sources */,
 				EC3B066B24AC6ADE000DF9BF /* CrossSigningBannerPreferences.swift in Sources */,
 				ECB101322477CFDB00CF8C11 /* UIDevice.swift in Sources */,
+				D1110AFF24EADE1500B08FDB /* ActivityIndicator.swift in Sources */,
 				B169330320F3C98900746532 /* RoomBubbleCellData.m in Sources */,
 				EC1CA86224C1DEC400DE9EBF /* EnterPinCodeViewState.swift in Sources */,
 				EC711B8A24A63B37008F830C /* SecretsRecoveryWithPassphraseViewController.swift in Sources */,
@@ -6818,7 +6912,7 @@
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
+				PRODUCT_BUNDLE_IDENTIFIER = im.vector.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PRODUCT_NAME)/SupportingFiles/Riot-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -6850,7 +6944,7 @@
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
+				PRODUCT_BUNDLE_IDENTIFIER = im.vector.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PRODUCT_NAME)/SupportingFiles/Riot-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

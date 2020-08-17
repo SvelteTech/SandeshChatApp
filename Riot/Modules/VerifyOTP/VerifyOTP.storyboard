@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--VerifyOTP View Controller-->
+        <scene sceneID="nEH-Ww-Rqf">
+            <objects>
+                <viewController storyboardIdentifier="VerifyOTP" id="xwa-La-pPC" customClass="VerifyOTPViewController" customModule="Riot" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Igr-5v-jFH">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mux-gr-tpE" customClass="PinView" customModule="Riot" customModuleProvider="target">
+                                <rect key="frame" x="20" y="176" width="374" height="50"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="3En-b7-Hdc"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q47-FC-BW5">
+                                <rect key="frame" x="164.66666666666666" y="246" width="85" height="30"/>
+                                <state key="normal" title="Resend OTP"/>
+                                <connections>
+                                    <action selector="resendOTPButtonPressed" destination="xwa-La-pPC" eventType="touchUpInside" id="8Jo-Lv-czG"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xjj-Rt-MZ7">
+                                <rect key="frame" x="132" y="326" width="150" height="30"/>
+                                <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="r2Z-3J-4ey"/>
+                                </constraints>
+                                <state key="normal" title="Verify">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="verifyOTPButtonPressed" destination="xwa-La-pPC" eventType="touchUpInside" id="v5r-mN-xdo"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verify OTP" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1zw-Jr-Wul">
+                                <rect key="frame" x="158.66666666666666" y="102" width="97" height="24"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                <color key="textColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vai-qM-8Vx">
+                                <rect key="frame" x="334" y="20" width="60" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="6L4-0y-F12"/>
+                                </constraints>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelButtonPressed" destination="xwa-La-pPC" eventType="touchUpInside" id="VF9-SA-K6q"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Q47-FC-BW5" firstAttribute="centerX" secondItem="h3c-Lc-sHr" secondAttribute="centerX" id="AzE-XX-T1k"/>
+                            <constraint firstItem="h3c-Lc-sHr" firstAttribute="trailing" secondItem="Mux-gr-tpE" secondAttribute="trailing" constant="20" id="Cdo-QK-V4y"/>
+                            <constraint firstItem="1zw-Jr-Wul" firstAttribute="top" secondItem="h3c-Lc-sHr" secondAttribute="top" constant="102" id="G2d-O3-pW3"/>
+                            <constraint firstItem="Mux-gr-tpE" firstAttribute="centerX" secondItem="h3c-Lc-sHr" secondAttribute="centerX" id="Mfb-wD-l0f"/>
+                            <constraint firstItem="xjj-Rt-MZ7" firstAttribute="top" secondItem="Q47-FC-BW5" secondAttribute="bottom" constant="50" id="Q22-sh-BV2"/>
+                            <constraint firstItem="1zw-Jr-Wul" firstAttribute="centerX" secondItem="h3c-Lc-sHr" secondAttribute="centerX" id="RXO-F7-ds8"/>
+                            <constraint firstItem="Mux-gr-tpE" firstAttribute="top" secondItem="1zw-Jr-Wul" secondAttribute="bottom" constant="50" id="U2p-zb-cbW"/>
+                            <constraint firstItem="vai-qM-8Vx" firstAttribute="top" secondItem="h3c-Lc-sHr" secondAttribute="top" constant="20" id="eBa-VM-vxj"/>
+                            <constraint firstItem="xjj-Rt-MZ7" firstAttribute="centerX" secondItem="h3c-Lc-sHr" secondAttribute="centerX" id="o5V-Ee-QMK"/>
+                            <constraint firstItem="Q47-FC-BW5" firstAttribute="top" secondItem="Mux-gr-tpE" secondAttribute="bottom" constant="20" id="qhK-mO-a4n"/>
+                            <constraint firstItem="h3c-Lc-sHr" firstAttribute="trailing" secondItem="vai-qM-8Vx" secondAttribute="trailing" constant="20" id="ygP-Wi-Mlj"/>
+                            <constraint firstItem="Mux-gr-tpE" firstAttribute="leading" secondItem="h3c-Lc-sHr" secondAttribute="leading" constant="20" id="ysq-Oe-hXg"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="h3c-Lc-sHr"/>
+                    </view>
+                    <connections>
+                        <outlet property="pinView" destination="Mux-gr-tpE" id="ucG-ic-Yu7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mzE-rS-as1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="67" y="177"/>
+        </scene>
+    </scenes>
+</document>

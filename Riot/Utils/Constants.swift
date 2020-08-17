@@ -20,5 +20,8 @@ enum Constants {
     
     static let toBeRemovedNotificationCategoryIdentifier = "TO_BE_REMOVED"
     static let callInviteNotificationCategoryIdentifier = "CALL_INVITE"
+  static let loginURL = "http://23.100.84.74/app_api/index.php/Chat_register/login"
+  static let verifyOTPURL = "http://23.100.84.74/app_api/index.php/Chat_register/otpVerification"
+  static let createPinURL = "http://23.100.84.74/app_api/index.php/Chat_register/savePin"
     
 }

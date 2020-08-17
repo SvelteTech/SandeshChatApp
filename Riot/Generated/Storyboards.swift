@@ -207,6 +207,11 @@ internal enum StoryboardScene {
 
     internal static let initialScene = InitialSceneType<Riot.UserVerificationStartViewController>(storyboard: UserVerificationStartViewController.self)
   }
+  internal enum VerifyOTP: StoryboardType {
+    internal static let storyboardName = "VerifyOTP"
+
+    internal static let verifyOTP = SceneType<Riot.VerifyOTPViewController>(storyboard: VerifyOTP.self, identifier: "VerifyOTP")
+  }
   internal enum WidgetPermissionViewController: StoryboardType {
     internal static let storyboardName = "WidgetPermissionViewController"
 

@@ -481,19 +481,39 @@
 
 - (void)presentCompleteSecurityWithSession:(MXSession*)session
 {
-    KeyVerificationCoordinatorBridgePresenter *keyVerificationCoordinatorBridgePresenter = [[KeyVerificationCoordinatorBridgePresenter alloc] initWithSession:session];
-    keyVerificationCoordinatorBridgePresenter.delegate = self;
-    
-    if (self.navigationController)
-    {
-        [keyVerificationCoordinatorBridgePresenter pushCompleteSecurityFrom:self.navigationController isNewSignIn:YES animated:YES];
-    }
-    else
-    {
-        [keyVerificationCoordinatorBridgePresenter presentCompleteSecurityFrom:self isNewSignIn:YES animated:YES];
-    }
-    
-    self.keyVerificationCoordinatorBridgePresenter = keyVerificationCoordinatorBridgePresenter;
+//    KeyVerificationCoordinatorBridgePresenter *keyVerificationCoordinatorBridgePresenter = [[KeyVerificationCoordinatorBridgePresenter alloc] initWithSession:session];
+//    keyVerificationCoordinatorBridgePresenter.delegate = self;
+//    if (self.navigationController)
+//    {
+//        [keyVerificationCoordinatorBridgePresenter pushCompleteSecurityFrom:self.navigationController isNewSignIn:YES animated:YES];
+//    }
+//    else
+//    {
+//        [keyVerificationCoordinatorBridgePresenter presentCompleteSecurityFrom:self isNewSignIn:YES animated:YES];
+//    }
+  
+  NSArray *list = [session.myUserId componentsSeparatedByString:@"_"];
+  if ([list firstObject] != nil) {
+    [self.authenticationActivityIndicator startAnimating];
+    NSString *mobileNumber = [[list firstObject] stringByReplacingOccurrencesOfString:@"@" withString:@""];
+
+    [CustomLoginModel sendLoginRequestWithMobileNumber:mobileNumber completionHandler:^(BOOL status, NSString * _Nullable error) {
+      if (status) {
+        NSLog(@"LoginSuccess");
+        dispatch_async(dispatch_get_main_queue(), ^{
+          [self.authenticationActivityIndicator stopAnimating];
+          UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"VerifyOTP"
+                                                               bundle:nil];
+          VerifyOTPViewController *verifyVC = [storyboard instantiateViewControllerWithIdentifier:@"VerifyOTP"];
+          verifyVC.mobileNumber = mobileNumber;
+          [self presentViewController:verifyVC animated:YES completion: nil];
+        });
+      } else {
+        NSLog(@"Error - %@", error);
+      }
+    }];
+  }
+//    self.keyVerificationCoordinatorBridgePresenter = keyVerificationCoordinatorBridgePresenter;
 }
 
 - (void)dismiss
