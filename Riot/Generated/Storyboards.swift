@@ -122,6 +122,11 @@ internal enum StoryboardScene {
 
     internal static let initialScene = InitialSceneType<Riot.MajorUpdateViewController>(storyboard: MajorUpdateViewController.self)
   }
+  internal enum PinVerification: StoryboardType {
+    internal static let storyboardName = "PinVerification"
+
+    internal static let pinVerification = SceneType<Riot.PinVerificationViewController>(storyboard: PinVerification.self, identifier: "PinVerification")
+  }
   internal enum QRCodeReaderViewController: StoryboardType {
     internal static let storyboardName = "QRCodeReaderViewController"
 

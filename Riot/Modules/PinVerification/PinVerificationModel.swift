@@ -15,19 +15,15 @@
 //
 
 import Foundation
-import UIKit
 
-@objc class VerifyOTPViewModel: NSObject {
-  func sendOtpRequest(_ otp: String, _ sessionId: String, success: @escaping(_ status: Bool) -> Void, failure: @escaping(_ errorMessage: String?) -> Void) {
-    let verifyOTPURL = Constants.twoFactorVerifyOTPURL + "/" + sessionId + "/" + otp
-//    let imeiNumber = UIDevice.current.identifierForVendor?.uuidString
-//    let parameters: [String: Any] = ["otp": otp,
-//                      "imei": imeiNumber,
-//                      "mobile": mobileNumber]
+@objc class PinVerificationModel: NSObject {
+  func sendSetPinRequest(_ userId: String, _ pin: String, success: @escaping(_ status: Bool) -> Void, failure: @escaping(_ errorMessage: String?) -> Void) {
+    let parameters: [String: Any] = ["user_id": userId,
+                      "pin": pin]
     
-    NetworkManager.shared.sendPostRequest(urlString: verifyOTPURL, parameters: nil) { (data, error) in
+    NetworkManager.shared.sendPostRequest(urlString: Constants.createPinURL, parameters: parameters) { (data, error) in
       if let data = data, error == nil {
-        debugPrint("Got Verify OTP response - \(data)")
+        debugPrint("Got Set PIN Response - \(data)")
         success(self.parseResponse(data))
       } else if let errorMessage = error {
         failure(errorMessage)
@@ -38,7 +34,7 @@ import UIKit
   func parseResponse(_ data: Data) -> Bool {
     do {
       if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-        if let successResponse = json["Status"] as? String, successResponse == "Success" {
+        if let successResponse = json["success"] as? String, successResponse == "1" {
           return true
         }
       }

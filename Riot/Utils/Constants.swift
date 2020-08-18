@@ -23,5 +23,6 @@ enum Constants {
   static let loginURL = "http://23.100.84.74/app_api/index.php/Chat_register/login"
   static let verifyOTPURL = "http://23.100.84.74/app_api/index.php/Chat_register/otpVerification"
   static let createPinURL = "http://23.100.84.74/app_api/index.php/Chat_register/savePin"
-    
+  static let twoFactorLoginURL = "https://2factor.in/API/V1/b9c5b0b2-e158-11ea-9fa5-0200cd936042/SMS/+91"
+  static let twoFactorVerifyOTPURL = "https://2factor.in/API/V1/b9c5b0b2-e158-11ea-9fa5-0200cd936042/SMS/VERIFY"
 }

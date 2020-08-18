@@ -15,31 +15,32 @@
 //
 
 import UIKit
-import MatrixKit
 
-@objcMembers
-class VerifyOTPViewController: UIViewController {
+class PinVerificationViewController: UIViewController, PinViewDelegate {
+  
   // MARK: - IBOutlets
-  @IBOutlet var pinView: PinView!
+  @IBOutlet weak var enterPinView: PinView!
+  @IBOutlet weak var confirmPinView: PinView!
   
   // MARK: - Variables
-  var verifyOTPModel = VerifyOTPViewModel()
-  var enteredOTP: String = ""
-  var sessionId: String = ""
+  var enteredPin: String = ""
+  var confirmedPin: String = ""
+  var pinVerificationModel = PinVerificationModel()
+  var userId: String = ""
   
-  // MARK: - Methodss
+  // MARK: - Methods
   override func viewDidLoad() {
     super.viewDidLoad()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.title = "Verify OTP"
-    configurePinView()
+    configurePinView(enterPinView)
+    configurePinView(confirmPinView)
   }
   
-  func configurePinView() {
-    pinView.pinLength = 6
+  func configurePinView(_ pinView: PinView) {
+    pinView.pinLength = 4
     pinView.secureCharacter = "\u{25CF}"
     pinView.interSpace = 10
     pinView.textColor = UIColor.blue
@@ -51,9 +52,13 @@ class VerifyOTPViewController: UIViewController {
     pinView.placeholder = "******"
     pinView.shouldDismissKeyboardOnEmptyFirstField = false
     pinView.font = UIFont.systemFont(ofSize: 15)
-    configurePinViewForBoxStyle()
+    configurePinViewForBoxStyle(pinView)
     pinView.keyboardType = .phonePad
-    pinView.didFinishCallback = didFinishEnteringPin(pin:)
+    if pinView == enterPinView {
+     pinView.didFinishCallback = didFinishEnteringPin(pin:)
+    } else if pinView == confirmPinView {
+      pinView.didFinishCallback = didFinishEnteringConfirmedPin(pin:)
+    }
     pinView.didChangeCallback = { pin in
       print("The entered pin is \(pin)")
     }
@@ -61,7 +66,7 @@ class VerifyOTPViewController: UIViewController {
     pinView.clearPin()
   }
   
-  func configurePinViewForBoxStyle() {
+  func configurePinViewForBoxStyle(_ pinView: PinView) {
     pinView.activeBorderLineThickness = 4
     pinView.fieldBackgroundColor = UIColor.clear
     pinView.activeFieldBackgroundColor = UIColor.clear
@@ -72,30 +77,22 @@ class VerifyOTPViewController: UIViewController {
   
   func didFinishEnteringPin(pin: String) {
     debugPrint("User has entered \(pin)")
-    enteredOTP = pin
+    enteredPin = pin
+  }
+  
+  func didFinishEnteringConfirmedPin(pin: String) {
+    debugPrint("User has entered \(pin)")
+    confirmedPin = pin
   }
   
   func successResponse(_ status: Bool) {
     DispatchQueue.main.async {
       ActivityIndicator.shared.stop(self.view)
       if status {
-        debugPrint("OTP Verify successfully.")
-//        self.showAlert("OTP Verify successfully.")
-        let storyboard = UIStoryboard(name: "PinVerification", bundle: nil)
-        var pinVerificationVC: PinVerificationViewController?
-        if #available(iOS 13.0, *) {
-          pinVerificationVC = storyboard.instantiateViewController(identifier: "PinVerification") as? PinVerificationViewController
-        } else {
-          // Fallback on earlier versions
-          pinVerificationVC = storyboard.instantiateViewController(withIdentifier: "PinVerification") as? PinVerificationViewController
-        }
-        
-        if let pinVerificationVC = pinVerificationVC {
-          pinVerificationVC.userId = self.sessionId
-          self.present(pinVerificationVC, animated: true, completion: nil)
-        }
+        debugPrint("Pin set successfully.")
+        self.showAlert("PIN set successfully.")
       } else {
-        debugPrint("Invalid OTP.")
+        debugPrint("Set Pin failed.")
       }
     }
   }
@@ -103,26 +100,13 @@ class VerifyOTPViewController: UIViewController {
   func failureResponse(_ errorMessage: String?) {
     DispatchQueue.main.async {
       ActivityIndicator.shared.stop(self.view)
-      debugPrint("Verify OTP failed - \(String(describing: errorMessage))")
+      debugPrint("PIN set failed - \(String(describing: errorMessage))")
       if let errorMessage = errorMessage {
         self.showAlert(errorMessage, "Error", UIAlertAction(title: "OK", style: .default, handler: { _  in
           self.cancelButtonPressed()
         }))
       }
     }
-  }
-  
-  // MARK: - IBAction methods
-  @IBAction private func resendOTPButtonPressed() {
-  }
-  
-  @IBAction private func verifyOTPButtonPressed() {
-    ActivityIndicator.shared.start(self.view)
-    verifyOTPModel.sendOtpRequest(enteredOTP, sessionId, success: successResponse(_:), failure: failureResponse(_:))
-  }
-  
-  @IBAction private func cancelButtonPressed() {
-    self.dismiss(animated: true, completion: nil)
   }
   
   func showAlert(_ message: String, _ title: String? = nil, _ okButton: UIAlertAction? = nil) {
@@ -135,9 +119,24 @@ class VerifyOTPViewController: UIViewController {
     }
     self.present(alert, animated: true, completion: nil)
   }
-}
-
-extension VerifyOTPViewController: PinViewDelegate {
+  
+  // MARK: - IBAction methods
+  @IBAction private func confirmButtonPressed() {
+    if enteredPin == confirmedPin {
+//      ActivityIndicator.shared.start(self.view)
+//      pinVerificationModel.sendSetPinRequest(userId, enteredPin, success: successResponse(_:), failure: failureResponse(_:))
+      UserDefault.save("AppPin", enteredPin)
+      self.showAlert("Pin Set Successfully.")
+    } else {
+      self.showAlert("PIN is not matched. Please enter the same PIN.")
+    }
+  }
+  
+  @IBAction private func cancelButtonPressed() {
+    self.dismiss(animated: true, completion: nil)
+  }
+  
+  // MARK: - Delegate methods
   func pinDidBeginEditing() {
     debugPrint("Pin editing begin")
   }

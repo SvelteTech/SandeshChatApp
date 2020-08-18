@@ -497,7 +497,7 @@
     [self.authenticationActivityIndicator startAnimating];
     NSString *mobileNumber = [[list firstObject] stringByReplacingOccurrencesOfString:@"@" withString:@""];
 
-    [CustomLoginModel sendLoginRequestWithMobileNumber:mobileNumber completionHandler:^(BOOL status, NSString * _Nullable error) {
+    [CustomLoginModel sendLoginRequestWithMobileNumber:mobileNumber completionHandler:^(BOOL status, NSString * _Nullable sessionId, NSString * _Nullable error) {
       if (status) {
         NSLog(@"LoginSuccess");
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -505,7 +505,7 @@
           UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"VerifyOTP"
                                                                bundle:nil];
           VerifyOTPViewController *verifyVC = [storyboard instantiateViewControllerWithIdentifier:@"VerifyOTP"];
-          verifyVC.mobileNumber = mobileNumber;
+          verifyVC.sessionId = sessionId;
           [self presentViewController:verifyVC animated:YES completion: nil];
         });
       } else {

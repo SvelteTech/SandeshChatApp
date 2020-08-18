@@ -18,30 +18,32 @@ import UIKit
 
 @objcMembers
 class CustomLoginModel: NSObject {
-  static func sendLoginRequest(mobileNumber: String, completionHandler: @escaping(_ status: Bool, _ error: String?) -> Void) {
-    let imeiNumber = UIDevice.current.identifierForVendor?.uuidString ?? ""
-    let parameters: [String: Any] = ["imei": imeiNumber, "mobile": mobileNumber]
-    NetworkManager.shared.sendPostRequest(urlString: Constants.loginURL, parameters: parameters) { (data, error) in
+  static func sendLoginRequest(mobileNumber: String, completionHandler: @escaping(_ status: Bool, _ sessionId: String?, _ error: String?) -> Void) {
+    let verifyOTPURL = Constants.twoFactorLoginURL + mobileNumber + "/AUTOGEN"
+//    let imeiNumber = UIDevice.current.identifierForVendor?.uuidString ?? ""
+//    let parameters: [String: Any] = ["imei": imeiNumber, "mobile": mobileNumber]
+    NetworkManager.shared.sendPostRequest(urlString: verifyOTPURL, parameters: nil) { (data, error) in
       if let data = data {
         debugPrint("Got login response - \(data)")
-        completionHandler(parseData(data), nil)
+        let response = parseData(data)
+        completionHandler(response.0, response.1, nil)
       } else if let errorMessage = error {
         debugPrint("Error - \(errorMessage)")
-        completionHandler(false, errorMessage)
+        completionHandler(false, nil, errorMessage)
       }
     }
   }
   
-  private static func parseData(_ data: Data) -> Bool {
+  private static func parseData(_ data: Data) -> (Bool, String?) {
     do {
-      if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-        if let successResponse = json["success"] as? String, successResponse == "1" {
-          return true
+      if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any], let sessionId = json["Details"] as? String {
+        if let successResponse = json["Status"] as? String, successResponse == "Success" {
+          return (true, sessionId)
         }
       }
     } catch let error as NSError {
       print("Failed to load: \(error.localizedDescription)")
     }
-    return false
+    return (false, nil)
   }
 }

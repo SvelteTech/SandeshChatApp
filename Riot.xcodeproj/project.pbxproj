@@ -734,6 +734,11 @@
 		D1110AFC24EAA19500B08FDB /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1110ADD24EA5D1E00B08FDB /* NetworkService.swift */; };
 		D1110AFD24EAA1A000B08FDB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC85D753247C0F5B002C44C9 /* Constants.swift */; };
 		D1110AFF24EADE1500B08FDB /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1110AFE24EADE1500B08FDB /* ActivityIndicator.swift */; };
+		D1A034E224EBF0E100F89EC2 /* PinVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A034E124EBF0E100F89EC2 /* PinVerificationViewController.swift */; };
+		D1A034E424EBF0F800F89EC2 /* PinVerification.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1A034E324EBF0F800F89EC2 /* PinVerification.storyboard */; };
+		D1A034E624EBF61900F89EC2 /* PinVerificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A034E524EBF61900F89EC2 /* PinVerificationModel.swift */; };
+		D1A034E724EBF73600F89EC2 /* PinVerificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A034E524EBF61900F89EC2 /* PinVerificationModel.swift */; };
+		D1A034EA24EC46FA00F89EC2 /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A034E924EC46FA00F89EC2 /* UserDefault.swift */; };
 		D1F5467424EAE8D900A40E38 /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F5466F24EAE8D900A40E38 /* PinView.swift */; };
 		D1F5467524EAE8D900A40E38 /* PinField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F5467024EAE8D900A40E38 /* PinField.swift */; };
 		D1F5467624EAE8D900A40E38 /* PinCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1F5467224EAE8D900A40E38 /* PinCell.xib */; };
@@ -1861,6 +1866,10 @@
 		D1110AF424EA869700B08FDB /* VerifyOTPViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyOTPViewModel.swift; sourceTree = "<group>"; };
 		D1110AF924EA9C5A00B08FDB /* CustomLoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLoginModel.swift; sourceTree = "<group>"; };
 		D1110AFE24EADE1500B08FDB /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		D1A034E124EBF0E100F89EC2 /* PinVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinVerificationViewController.swift; sourceTree = "<group>"; };
+		D1A034E324EBF0F800F89EC2 /* PinVerification.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PinVerification.storyboard; sourceTree = "<group>"; };
+		D1A034E524EBF61900F89EC2 /* PinVerificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinVerificationModel.swift; sourceTree = "<group>"; };
+		D1A034E924EC46FA00F89EC2 /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
 		D1F5466F24EAE8D900A40E38 /* PinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
 		D1F5467024EAE8D900A40E38 /* PinField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinField.swift; sourceTree = "<group>"; };
 		D1F5467224EAE8D900A40E38 /* PinCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinCell.xib; sourceTree = "<group>"; };
@@ -3176,6 +3185,7 @@
 		B1B5567620EE6C4C00210D55 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				D1A034E024EBF0CB00F89EC2 /* PinVerification */,
 				D1110AF824EA9C4000B08FDB /* CustomLogin */,
 				D1110ADC24EA5CBA00B08FDB /* VerifyOTP */,
 				EC1CA84F24C1DEC400DE9EBF /* SetPinCode */,
@@ -4605,6 +4615,16 @@
 			path = CustomLogin;
 			sourceTree = "<group>";
 		};
+		D1A034E024EBF0CB00F89EC2 /* PinVerification */ = {
+			isa = PBXGroup;
+			children = (
+				D1A034E124EBF0E100F89EC2 /* PinVerificationViewController.swift */,
+				D1A034E324EBF0F800F89EC2 /* PinVerification.storyboard */,
+				D1A034E524EBF61900F89EC2 /* PinVerificationModel.swift */,
+			);
+			path = PinVerification;
+			sourceTree = "<group>";
+		};
 		D1F5466D24EAE8D900A40E38 /* PinView */ = {
 			isa = PBXGroup;
 			children = (
@@ -5089,6 +5109,7 @@
 				EC2B4EF024A1EEBD005EB739 /* DataProtectionHelper.swift */,
 				ECDC15F124AF41D2003437CF /* FormattedBodyParser.swift */,
 				D1110AFE24EADE1500B08FDB /* ActivityIndicator.swift */,
+				D1A034E924EC46FA00F89EC2 /* UserDefault.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -5476,6 +5497,7 @@
 				324A204F225FC571004FE8B0 /* DeviceVerificationIncomingViewController.storyboard in Resources */,
 				3232AB4B2256558300AD6A5C /* TemplateScreenViewController.storyboard in Resources */,
 				B1D1BDA822BBAFC900831367 /* ReactionsMenuView.xib in Resources */,
+				D1A034E424EBF0F800F89EC2 /* PinVerification.storyboard in Resources */,
 				32B1FEDB21A46F2C00637127 /* TermsView.xib in Resources */,
 				B1BD71BF238EA56700BA92E2 /* WidgetPermissionViewController.storyboard in Resources */,
 				B1DCC63222E7026F00625807 /* EmojiPickerHeaderView.xib in Resources */,
@@ -5751,6 +5773,7 @@
 				3209451321F1C1D50088CAA2 /* BlackTheme.swift in Sources */,
 				24EEE5A21F23A8B400B3C705 /* MXRoom+Riot.m in Sources */,
 				32FD755924D15C7A00BA7B37 /* Configurable.swift in Sources */,
+				D1A034E724EBF73600F89EC2 /* PinVerificationModel.swift in Sources */,
 				B1664BC720F4E67600808783 /* SharePresentingViewController.m in Sources */,
 				32FD755224D074C700BA7B37 /* CommonConfiguration.swift in Sources */,
 				B1DB4F0F223170000065DBFA /* UserNameColorGenerator.swift in Sources */,
@@ -5866,8 +5889,10 @@
 				EC1CA86024C1DEC400DE9EBF /* EnterPinCodeViewAction.swift in Sources */,
 				32FD757624D2C9BA00BA7B37 /* Bundle.swift in Sources */,
 				B12D7A0023E2462200FACEDC /* UserVerificationStartCoordinatorType.swift in Sources */,
+				D1A034EA24EC46FA00F89EC2 /* UserDefault.swift in Sources */,
 				EC711B9324A63B37008F830C /* SecretsRecoveryWithKeyViewController.swift in Sources */,
 				D1110AF124EA7C9400B08FDB /* VerifyOTPViewController.swift in Sources */,
+				D1A034E224EBF0E100F89EC2 /* PinVerificationViewController.swift in Sources */,
 				B1B5572220EE6C4D00210D55 /* RoomSettingsViewController.m in Sources */,
 				B1B5577320EE702800210D55 /* JitsiViewController.m in Sources */,
 				B169331620F3CAFC00746532 /* PublicRoomsDirectoryDataSource.m in Sources */,
@@ -6015,6 +6040,7 @@
 				3232ABA7225730E100AD6A5C /* DeviceVerificationStartCoordinator.swift in Sources */,
 				B1D4752721EE4E630067973F /* KeyboardAvoider.swift in Sources */,
 				B1D4752821EE4E630067973F /* KeyboardNotification.swift in Sources */,
+				D1A034E624EBF61900F89EC2 /* PinVerificationModel.swift in Sources */,
 				B1D1BDA622BBAFB500831367 /* ReactionsMenuView.swift in Sources */,
 				EC711B4624A63B13008F830C /* MXRecoveryService.swift in Sources */,
 				EC1CA86C24C1DEC400DE9EBF /* SetPinCoordinatorType.swift in Sources */,
