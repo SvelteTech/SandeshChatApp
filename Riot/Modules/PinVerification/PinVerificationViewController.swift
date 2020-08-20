@@ -92,7 +92,7 @@ class PinVerificationViewController: UIViewController, PinViewDelegate {
       ActivityIndicator.shared.stop(self.view)
       if status {
         debugPrint("Pin set successfully.")
-        self.showAlert("PIN set successfully.")
+        self.showAlert("Pin set successfully.")
       } else {
         debugPrint("Set Pin failed.")
       }
@@ -130,7 +130,7 @@ class PinVerificationViewController: UIViewController, PinViewDelegate {
       UserDefault.save("AppPin", enteredPin)
       self.showAlert("Pin Set Successfully.")
     } else {
-      self.showAlert("PIN is not matched. Please enter the same PIN.")
+      self.showAlert("Pin is not matched. Please enter the same Pin.", "Set Pin Failed")
     }
   }
   
