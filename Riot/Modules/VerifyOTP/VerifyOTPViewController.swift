@@ -39,7 +39,7 @@ class VerifyOTPViewController: UIViewController {
   }
   
   func configurePinView() {
-    pinView.pinLength = 6
+    pinView.pinLength = 4
     pinView.secureCharacter = "\u{25CF}"
     pinView.interSpace = 10
     pinView.textColor = UIColor.blue

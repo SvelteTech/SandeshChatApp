@@ -19,7 +19,8 @@ import UIKit
 @objcMembers
 class CustomLoginModel: NSObject {
   static func sendLoginRequest(mobileNumber: String, completionHandler: @escaping(_ status: Bool, _ sessionId: String?, _ error: String?) -> Void) {
-    let verifyOTPURL = Constants.twoFactorLoginURL + mobileNumber + "/AUTOGEN"
+    let randomOtp = String(format: "%04d", arc4random_uniform(10000))
+    let verifyOTPURL = Constants.twoFactorLoginURL + mobileNumber + "/" + randomOtp + "/Sandesh"
 //    let imeiNumber = UIDevice.current.identifierForVendor?.uuidString ?? ""
 //    let parameters: [String: Any] = ["imei": imeiNumber, "mobile": mobileNumber]
     NetworkManager.shared.sendPostRequest(urlString: verifyOTPURL, parameters: nil) { (data, error) in
