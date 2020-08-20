@@ -20,6 +20,7 @@ import UIKit
 class CustomLoginModel: NSObject {
   static func sendLoginRequest(mobileNumber: String, completionHandler: @escaping(_ status: Bool, _ sessionId: String?, _ error: String?) -> Void) {
     let randomOtp = String(format: "%04d", arc4random_uniform(10000))
+    debugPrint("The random generated OTP is \(randomOtp).")
     let verifyOTPURL = Constants.twoFactorLoginURL + mobileNumber + "/" + randomOtp + "/Sandesh"
 //    let imeiNumber = UIDevice.current.identifierForVendor?.uuidString ?? ""
 //    let parameters: [String: Any] = ["imei": imeiNumber, "mobile": mobileNumber]

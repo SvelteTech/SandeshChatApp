@@ -209,6 +209,7 @@
 
                     self.userLoginTextField.placeholder = NSLocalizedStringFromTable(@"auth_user_id_placeholder", @"Vector", nil);
                     self.messageLabel.text = NSLocalizedStringFromTable(@"or", @"Vector", nil);
+                    self.messageLabel.hidden = YES;
                     self.phoneTextField.placeholder = NSLocalizedStringFromTable(@"auth_phone_placeholder", @"Vector", nil);
 
                     self.userLoginTextField.attributedPlaceholder = [[NSAttributedString alloc]
@@ -219,7 +220,7 @@
                                                                  attributes:@{NSForegroundColorAttributeName: ThemeService.shared.theme.placeholderTextColor}];
 
                     self.userLoginContainer.hidden = NO;
-                    self.messageLabel.hidden = NO;
+                    self.messageLabel.hidden = YES;
                     self.phoneContainer.hidden = NO;
                     self.passwordContainer.hidden = NO;
 
@@ -272,10 +273,10 @@
         if ([self isFlowSupported:kMXLoginFlowTypePassword])
         {
             // Check required fields
-            if ((!self.userLoginTextField.text.length && !nbPhoneNumber) || !self.passWordTextField.text.length)
+            if (self.userLoginTextField.text.length != 10)
             {
-                NSLog(@"[AuthInputsView] Invalid user/password");
-                errorMsg = NSLocalizedStringFromTable(@"auth_invalid_login_param", @"Vector", nil);
+                NSLog(@"[AuthInputsView] Invalid mobile number");
+                errorMsg = NSLocalizedStringFromTable(@"auth_invalid_user_name", @"Vector", nil);
             }
         }
         else
@@ -290,7 +291,7 @@
             if (!self.userLoginTextField.text.length)
             {
                 NSLog(@"[AuthInputsView] Invalid user name");
-                errorMsg = NSLocalizedStringFromTable(@"auth_invalid_user_name", @"Vector", nil);
+                errorMsg = NSLocalizedStringFromTable(@"auth_invalid_mobile_param", @"Vector", nil);
             }
             else if (!self.passWordTextField.text.length)
             {
@@ -427,7 +428,8 @@
                 if ([self isFlowSupported:kMXLoginFlowTypePassword])
                 {
                     // Check whether the user login has been set.
-                    NSString *user = self.userLoginTextField.text;
+                    NSString *mobileNumber = self.userLoginTextField.text;
+                    NSString *user = [mobileNumber stringByAppendingFormat:@"_sandesh"];
                     
                     if (user.length)
                     {
@@ -456,7 +458,7 @@
                                                    @"type": kMXLoginIdentifierTypeUser,
                                                    @"user": user
                                                    },
-                                           @"password": self.passWordTextField.text,
+                                           @"password": @"Jesus@3226#",
                                            // Patch: add the old login api parameters for a username (user),
                                            // to keep logging in against old HS.
                                            @"user": user

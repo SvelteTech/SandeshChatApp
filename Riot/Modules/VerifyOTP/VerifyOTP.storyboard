@@ -31,11 +31,13 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xjj-Rt-MZ7">
-                                <rect key="frame" x="132" y="326" width="150" height="30"/>
+                                <rect key="frame" x="132" y="326" width="150" height="40"/>
                                 <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="r2Z-3J-4ey"/>
+                                    <constraint firstAttribute="height" constant="40" id="tjw-cT-o5i"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                 <state key="normal" title="Verify">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -79,6 +81,7 @@
                     </view>
                     <connections>
                         <outlet property="pinView" destination="Mux-gr-tpE" id="ucG-ic-Yu7"/>
+                        <outlet property="verifyButton" destination="xjj-Rt-MZ7" id="gdV-yf-jiv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mzE-rS-as1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

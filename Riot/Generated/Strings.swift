@@ -98,6 +98,10 @@ internal enum VectorL10n {
   internal static var authInvalidLoginParam: String { 
     return VectorL10n.tr("Vector", "auth_invalid_login_param") 
   }
+  /// Invalid mobile number
+  internal static var authInvalidMobileParam: String { 
+    return VectorL10n.tr("Vector", "auth_invalid_mobile_param") 
+  }
   /// Password too short (min 6)
   internal static var authInvalidPassword: String { 
     return VectorL10n.tr("Vector", "auth_invalid_password") 
@@ -106,7 +110,7 @@ internal enum VectorL10n {
   internal static var authInvalidPhone: String { 
     return VectorL10n.tr("Vector", "auth_invalid_phone") 
   }
-  /// User names may only contain letters, numbers, dots, hyphens and underscores
+  /// Invalid mobile number, please re-enter a valid 10 digit mobile number.
   internal static var authInvalidUserName: String { 
     return VectorL10n.tr("Vector", "auth_invalid_user_name") 
   }
@@ -182,7 +186,7 @@ internal enum VectorL10n {
   internal static var authRecaptchaMessage: String { 
     return VectorL10n.tr("Vector", "auth_recaptcha_message") 
   }
-  /// Register
+  /// 
   internal static var authRegister: String { 
     return VectorL10n.tr("Vector", "auth_register") 
   }
@@ -298,7 +302,7 @@ internal enum VectorL10n {
   internal static var authUseServerOptions: String { 
     return VectorL10n.tr("Vector", "auth_use_server_options") 
   }
-  /// Email or user name
+  /// Mobile Number
   internal static var authUserIdPlaceholder: String { 
     return VectorL10n.tr("Vector", "auth_user_id_placeholder") 
   }

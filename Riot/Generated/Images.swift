@@ -67,6 +67,7 @@ internal enum Asset {
     internal static let importFilesButton = ImageAsset(name: "import_files_button")
     internal static let keyBackupLogo = ImageAsset(name: "key_backup_logo")
     internal static let keyVerificationSuccessShield = ImageAsset(name: "key_verification_success_shield")
+    internal static let loginIcon = ImageAsset(name: "LoginIcon")
     internal static let oldLogo = ImageAsset(name: "old_logo")
     internal static let cameraCapture = ImageAsset(name: "camera_capture")
     internal static let cameraPlay = ImageAsset(name: "camera_play")
@@ -135,8 +136,7 @@ internal struct ImageAsset {
     #if os(iOS) || os(tvOS)
     let image = Image(named: name, in: bundle, compatibleWith: nil)
     #elseif os(macOS)
-    let name = NSImage.Name(self.name)
-    let image = (bundle == .main) ? NSImage(named: name) : bundle.image(forResource: name)
+    let image = bundle.image(forResource: NSImage.Name(name))
     #elseif os(watchOS)
     let image = Image(named: name)
     #endif

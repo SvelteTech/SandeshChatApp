@@ -71,13 +71,13 @@
 
 // Authentication
 "auth_login" = "Log in";
-"auth_register" = "Register";
+"auth_register" = "";
 "auth_submit" = "Submit";
 "auth_skip" = "Skip";
 "auth_login_single_sign_on" = "Sign in with single sign-on";
 "auth_send_reset_email" = "Send Reset Email";
 "auth_return_to_login" = "Return to login screen";
-"auth_user_id_placeholder" = "Email or user name";
+"auth_user_id_placeholder" = "Mobile Number";
 "auth_password_placeholder" = "Password";
 "auth_new_password_placeholder" = "New password";
 "auth_user_name_placeholder" = "User name";
@@ -90,7 +90,8 @@
 "auth_home_server_placeholder" = "URL (e.g. https://matrix.org)";
 "auth_identity_server_placeholder" = "URL (e.g. https://vector.im)";
 "auth_invalid_login_param" = "Incorrect username and/or password";
-"auth_invalid_user_name" = "User names may only contain letters, numbers, dots, hyphens and underscores";
+"auth_invalid_mobile_param" = "Invalid mobile number";
+"auth_invalid_user_name" = "Invalid mobile number, please re-enter a valid 10 digit mobile number.";
 "auth_invalid_password" = "Password too short (min 6)";
 "auth_invalid_email" = "This doesn't look like a valid email address";
 "auth_invalid_phone" = "This doesn't look like a valid phone number";

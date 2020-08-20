@@ -21,6 +21,7 @@ class PinVerificationViewController: UIViewController, PinViewDelegate {
   // MARK: - IBOutlets
   @IBOutlet weak var enterPinView: PinView!
   @IBOutlet weak var confirmPinView: PinView!
+  @IBOutlet weak var confirmButton: UIButton!
   
   // MARK: - Variables
   var enteredPin: String = ""
@@ -35,6 +36,7 @@ class PinVerificationViewController: UIViewController, PinViewDelegate {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    confirmButton.layer.cornerRadius = 5
     configurePinView(enterPinView)
     configurePinView(confirmPinView)
   }
@@ -43,13 +45,13 @@ class PinVerificationViewController: UIViewController, PinViewDelegate {
     pinView.pinLength = 4
     pinView.secureCharacter = "\u{25CF}"
     pinView.interSpace = 10
-    pinView.textColor = UIColor.blue
+    pinView.textColor = UIColor.black
     pinView.borderLineColor = UIColor.blue
-    pinView.activeBorderLineColor = UIColor.gray
+    pinView.activeBorderLineColor = UIColor.blue
     pinView.borderLineThickness = 1
     pinView.shouldSecureText = true
     pinView.allowsWhitespaces = false
-    pinView.placeholder = "******"
+    pinView.placeholder = ""
     pinView.shouldDismissKeyboardOnEmptyFirstField = false
     pinView.font = UIFont.systemFont(ofSize: 15)
     configurePinViewForBoxStyle(pinView)
@@ -72,7 +74,7 @@ class PinVerificationViewController: UIViewController, PinViewDelegate {
     pinView.activeFieldBackgroundColor = UIColor.clear
     pinView.fieldCornerRadius = 0
     pinView.activeFieldCornerRadius = 0
-    pinView.style = .box
+    pinView.style = .underline
   }
   
   func didFinishEnteringPin(pin: String) {

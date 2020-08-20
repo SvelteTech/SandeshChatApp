@@ -21,6 +21,7 @@ import MatrixKit
 class VerifyOTPViewController: UIViewController {
   // MARK: - IBOutlets
   @IBOutlet var pinView: PinView!
+  @IBOutlet var verifyButton: UIButton!
   
   // MARK: - Variables
   var verifyOTPModel = VerifyOTPViewModel()
@@ -35,6 +36,7 @@ class VerifyOTPViewController: UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.title = "Verify OTP"
+    verifyButton.layer.cornerRadius = 5
     configurePinView()
   }
   
@@ -42,13 +44,13 @@ class VerifyOTPViewController: UIViewController {
     pinView.pinLength = 4
     pinView.secureCharacter = "\u{25CF}"
     pinView.interSpace = 10
-    pinView.textColor = UIColor.blue
+    pinView.textColor = UIColor.black
     pinView.borderLineColor = UIColor.blue
-    pinView.activeBorderLineColor = UIColor.gray
+    pinView.activeBorderLineColor = UIColor.blue
     pinView.borderLineThickness = 1
     pinView.shouldSecureText = true
     pinView.allowsWhitespaces = false
-    pinView.placeholder = "******"
+    pinView.placeholder = ""
     pinView.shouldDismissKeyboardOnEmptyFirstField = false
     pinView.font = UIFont.systemFont(ofSize: 15)
     configurePinViewForBoxStyle()
@@ -67,7 +69,7 @@ class VerifyOTPViewController: UIViewController {
     pinView.activeFieldBackgroundColor = UIColor.clear
     pinView.fieldCornerRadius = 0
     pinView.activeFieldCornerRadius = 0
-    pinView.style = .box
+    pinView.style = .underline
   }
   
   func didFinishEnteringPin(pin: String) {
@@ -95,7 +97,7 @@ class VerifyOTPViewController: UIViewController {
           self.present(pinVerificationVC, animated: true, completion: nil)
         }
       } else {
-        debugPrint("Invalid OTP.")
+        self.showAlert("The OTP you entered is invalid. Please enter the correct OTP.", "Verify OTP Failed")
       }
     }
   }

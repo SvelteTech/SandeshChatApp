@@ -103,7 +103,7 @@
     
     self.defaultIdentityServerUrl = RiotSettings.shared.identityServerUrlString;
     
-    self.welcomeImageView.image = [UIImage imageNamed:@"horizontal_logo"];
+    self.welcomeImageView.image = [UIImage imageNamed:@"LoginIcon"];
     
     [self.submitButton.layer setCornerRadius:5];
     self.submitButton.clipsToBounds = YES;
@@ -116,6 +116,7 @@
     [self.skipButton setTitle:NSLocalizedStringFromTable(@"auth_skip", @"Vector", nil) forState:UIControlStateNormal];
     [self.skipButton setTitle:NSLocalizedStringFromTable(@"auth_skip", @"Vector", nil) forState:UIControlStateHighlighted];
     self.skipButton.enabled = YES;
+    self.skipButton.hidden = YES;
     
     [self.customServersTickButton setImage:[UIImage imageNamed:@"selection_untick"] forState:UIControlStateNormal];
     [self.customServersTickButton setImage:[UIImage imageNamed:@"selection_untick"] forState:UIControlStateHighlighted];
@@ -208,7 +209,7 @@
                                                               attributes:@{NSForegroundColorAttributeName: ThemeService.shared.theme.placeholderTextColor}];
     }
     
-    self.submitButton.backgroundColor = ThemeService.shared.theme.tintColor;
+//    self.submitButton.backgroundColor = ThemeService.shared.theme.tintColor;
     self.skipButton.backgroundColor = ThemeService.shared.theme.tintColor;
     
     self.noFlowLabel.textColor = ThemeService.shared.theme.warningColor;
@@ -432,7 +433,7 @@
     if (!userInteractionEnabled)
     {
         // The right bar button is used to cancel the running request.
-        self.rightBarButtonItem.title = NSLocalizedStringFromTable(@"cancel", @"Vector", nil);
+        self.rightBarButtonItem.title = nil;
 
         // Remove the potential back button.
         self.mainNavigationItem.leftBarButtonItem = nil;
@@ -950,7 +951,7 @@
         authInputsview = (AuthInputsView*)self.authInputsView;
     }
 
-    self.forgotPasswordButton.hidden = (self.authType != MXKAuthenticationTypeLogin) || authInputsview.isSingleSignOnRequired;
+//    self.forgotPasswordButton.hidden = (self.authType != MXKAuthenticationTypeLogin) || authInputsview.isSingleSignOnRequired;
     
     // Adjust minimum leading constraint of the submit button
     if (self.forgotPasswordButton.isHidden)
