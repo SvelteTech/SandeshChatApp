@@ -28,6 +28,7 @@ class PinVerificationViewController: UIViewController, PinViewDelegate {
   var confirmedPin: String = ""
   var pinVerificationModel = PinVerificationModel()
   var userId: String = ""
+  var mxSession: MXSession!
   
   // MARK: - Methods
   override func viewDidLoad() {

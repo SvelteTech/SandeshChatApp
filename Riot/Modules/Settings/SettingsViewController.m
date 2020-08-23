@@ -56,17 +56,8 @@ enum
     SECTION_TAG_SIGN_OUT = 0,
     SECTION_TAG_USER_SETTINGS,
     SECTION_TAG_SECURITY,
-    SECTION_TAG_NOTIFICATIONS,
-    SECTION_TAG_CALLS,
-    SECTION_TAG_DISCOVERY,
-    SECTION_TAG_IDENTITY_SERVER,
-    SECTION_TAG_LOCAL_CONTACTS,
     SECTION_TAG_IGNORED_USERS,
-    SECTION_TAG_INTEGRATIONS,
     SECTION_TAG_USER_INTERFACE,
-    SECTION_TAG_ADVANCED,
-    SECTION_TAG_OTHER,
-    SECTION_TAG_LABS,
     SECTION_TAG_FLAIR,
     SECTION_TAG_DEACTIVATE_ACCOUNT
 };
@@ -75,39 +66,14 @@ enum
 {
     USER_SETTINGS_PROFILE_PICTURE_INDEX = 0,
     USER_SETTINGS_DISPLAYNAME_INDEX,
-    USER_SETTINGS_CHANGE_PASSWORD_INDEX,
     USER_SETTINGS_FIRST_NAME_INDEX,
-    USER_SETTINGS_SURNAME_INDEX,
-    USER_SETTINGS_ADD_EMAIL_INDEX,
-    USER_SETTINGS_ADD_PHONENUMBER_INDEX,
-    USER_SETTINGS_THREEPIDS_INFORMATION_INDEX
+    USER_SETTINGS_SURNAME_INDEX
 };
 
 enum
 {
     USER_SETTINGS_EMAILS_OFFSET = 2000,
     USER_SETTINGS_PHONENUMBERS_OFFSET = 1000
-};
-
-enum
-{
-    NOTIFICATION_SETTINGS_ENABLE_PUSH_INDEX = 0,
-    NOTIFICATION_SETTINGS_SHOW_DECODED_CONTENT,
-    NOTIFICATION_SETTINGS_GLOBAL_SETTINGS_INDEX,
-    NOTIFICATION_SETTINGS_PIN_MISSED_NOTIFICATIONS_INDEX,
-    NOTIFICATION_SETTINGS_PIN_UNREAD_INDEX,
-    //NOTIFICATION_SETTINGS_CONTAINING_MY_USER_NAME_INDEX,
-    //NOTIFICATION_SETTINGS_CONTAINING_MY_DISPLAY_NAME_INDEX,
-    //NOTIFICATION_SETTINGS_SENT_TO_ME_INDEX,
-    //NOTIFICATION_SETTINGS_INVITED_TO_ROOM_INDEX,
-    //NOTIFICATION_SETTINGS_PEOPLE_LEAVE_JOIN_INDEX,
-    //NOTIFICATION_SETTINGS_CALL_INVITATION_INDEX,
-};
-
-enum
-{
-    CALLS_ENABLE_STUN_SERVER_FALLBACK_INDEX=0,
-    CALLS_STUN_SERVER_FALLBACK_DESCRIPTION_INDEX,
 };
 
 enum
@@ -290,7 +256,6 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     Section *sectionUserSettings = [Section sectionWithTag:SECTION_TAG_USER_SETTINGS];
     [sectionUserSettings addRowWithTag:USER_SETTINGS_PROFILE_PICTURE_INDEX];
     [sectionUserSettings addRowWithTag:USER_SETTINGS_DISPLAYNAME_INDEX];
-    [sectionUserSettings addRowWithTag:USER_SETTINGS_CHANGE_PASSWORD_INDEX];
     if (BuildSettings.settingsScreenShowUserFirstName)
     {
         [sectionUserSettings addRowWithTag:USER_SETTINGS_FIRST_NAME_INDEX];
@@ -310,18 +275,6 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     {
         [sectionUserSettings addRowWithTag: USER_SETTINGS_PHONENUMBERS_OFFSET + index];
     }
-    if (BuildSettings.settingsScreenAllowAddingEmailThreepids)
-    {
-        [sectionUserSettings addRowWithTag:USER_SETTINGS_ADD_EMAIL_INDEX];
-    }
-    if (BuildSettings.settingsScreenAllowAddingPhoneThreepids)
-    {
-        [sectionUserSettings addRowWithTag:USER_SETTINGS_ADD_PHONENUMBER_INDEX];
-    }
-    if (BuildSettings.settingsScreenShowThreepidExplanatory)
-    {
-        [sectionUserSettings addRowWithTag:USER_SETTINGS_THREEPIDS_INFORMATION_INDEX];
-    }
     sectionUserSettings.headerTitle = NSLocalizedStringFromTable(@"settings_user_settings", @"Vector", nil);
     [tmpSections addObject:sectionUserSettings];
     
@@ -329,57 +282,6 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     [sectionSecurity addRowWithTag:SECURITY_BUTTON_INDEX];
     sectionSecurity.headerTitle = NSLocalizedStringFromTable(@"settings_security", @"Vector", nil);
     [tmpSections addObject:sectionSecurity];
-    
-    Section *sectionNotificationSettings = [Section sectionWithTag:SECTION_TAG_NOTIFICATIONS];
-    [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_ENABLE_PUSH_INDEX];
-    [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_SHOW_DECODED_CONTENT];
-    [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_GLOBAL_SETTINGS_INDEX];
-    [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_PIN_MISSED_NOTIFICATIONS_INDEX];
-    [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_PIN_UNREAD_INDEX];
-    sectionNotificationSettings.headerTitle = NSLocalizedStringFromTable(@"settings_notifications_settings", @"Vector", nil);
-    [tmpSections addObject:sectionNotificationSettings];
-    
-    if (BuildSettings.allowVoIPUsage && BuildSettings.stunServerFallbackUrlString)
-    {
-        Section *sectionCalls = [Section sectionWithTag:SECTION_TAG_CALLS];
-        [sectionCalls addRowWithTag:CALLS_ENABLE_STUN_SERVER_FALLBACK_INDEX];
-        [sectionCalls addRowWithTag:CALLS_STUN_SERVER_FALLBACK_DESCRIPTION_INDEX];
-        sectionCalls.headerTitle = NSLocalizedStringFromTable(@"settings_calls_settings", @"Vector", nil);
-        [tmpSections addObject:sectionCalls];
-    }
-    
-    if (BuildSettings.settingsScreenShowDiscoverySettings)
-    {
-        Section *sectionDiscovery = [Section sectionWithTag:SECTION_TAG_DISCOVERY];
-        NSInteger count = self.settingsDiscoveryTableViewSection.numberOfRows;
-        for (NSInteger index = 0; index < count; index++)
-        {
-            [sectionDiscovery addRowWithTag:index];
-        }
-        sectionDiscovery.headerTitle = NSLocalizedStringFromTable(@"settings_discovery_settings", @"Vector", nil);
-        [tmpSections addObject:sectionDiscovery];
-    }
-    
-    if (BuildSettings.settingsScreenAllowIdentityServerConfig)
-    {
-        Section *sectionIdentityServer = [Section sectionWithTag:SECTION_TAG_IDENTITY_SERVER];
-        [sectionIdentityServer addRowWithTag:IDENTITY_SERVER_INDEX];
-        [sectionIdentityServer addRowWithTag:IDENTITY_SERVER_DESCRIPTION_INDEX];
-        sectionIdentityServer.headerTitle = NSLocalizedStringFromTable(@"settings_identity_server_settings", @"Vector", nil);
-        [tmpSections addObject:sectionIdentityServer];
-    }
-    
-    if (BuildSettings.allowLocalContactsAccess)
-    {
-        Section *sectionLocalContacts = [Section sectionWithTag:SECTION_TAG_LOCAL_CONTACTS];
-        [sectionLocalContacts addRowWithTag:LOCAL_CONTACTS_SYNC_INDEX];
-        if (MXKAppSettings.standardAppSettings.syncLocalContacts)
-        {
-            [sectionLocalContacts addRowWithTag:LOCAL_CONTACTS_PHONEBOOK_COUNTRY_INDEX];
-        }
-        sectionLocalContacts.headerTitle = NSLocalizedStringFromTable(@"settings_contacts", @"Vector", nil);
-        [tmpSections addObject:sectionLocalContacts];
-    }
     
     MXSession *session = [AppDelegate theDelegate].mxSessions.firstObject;
     if (session.ignoredUsers.count)
@@ -393,61 +295,12 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         [tmpSections addObject:sectionIgnoredUsers];
     }
     
-    if (RiotSettings.shared.matrixApps)
-    {
-        Section *sectionIntegrations = [Section sectionWithTag:SECTION_TAG_INTEGRATIONS];
-        [sectionIntegrations addRowWithTag:INTEGRATIONS_INDEX];
-        [sectionIntegrations addRowWithTag:INTEGRATIONS_DESCRIPTION_INDEX];
-        sectionIntegrations.headerTitle = NSLocalizedStringFromTable(@"settings_integrations", @"Vector", nil);
-        [tmpSections addObject:sectionIntegrations];
-    }
-    
     Section *sectionUserInterface = [Section sectionWithTag:SECTION_TAG_USER_INTERFACE];
     [sectionUserInterface addRowWithTag:USER_INTERFACE_LANGUAGE_INDEX];
     [sectionUserInterface addRowWithTag:USER_INTERFACE_THEME_INDEX];
     sectionUserInterface.headerTitle = NSLocalizedStringFromTable(@"settings_user_interface", @"Vector", nil);
     [tmpSections addObject: sectionUserInterface];
-    
-    if (BuildSettings.settingsScreenShowAdvancedSettings)
-    {
-        Section *sectionAdvanced = [Section sectionWithTag:SECTION_TAG_ADVANCED];
-        [sectionAdvanced addRowWithTag:0];
-        sectionAdvanced.headerTitle = NSLocalizedStringFromTable(@"settings_advanced", @"Vector", nil);
-        [tmpSections addObject:sectionAdvanced];
-    }
-    
-    Section *sectionOther = [Section sectionWithTag:SECTION_TAG_OTHER];
-    [sectionOther addRowWithTag:OTHER_VERSION_INDEX];
-    [sectionOther addRowWithTag:OTHER_OLM_VERSION_INDEX];
-    [sectionOther addRowWithTag:OTHER_COPYRIGHT_INDEX];
-    [sectionOther addRowWithTag:OTHER_TERM_CONDITIONS_INDEX];
-    [sectionOther addRowWithTag:OTHER_PRIVACY_INDEX];
-    [sectionOther addRowWithTag:OTHER_THIRD_PARTY_INDEX];
-    if (BuildSettings.settingsScreenAllowChangingCrashUsageDataSettings)
-    {
-        [sectionOther addRowWithTag:OTHER_CRASH_REPORT_INDEX];
-    }
-    if (BuildSettings.settingsScreenAllowChangingRageshakeSettings)
-    {
-        [sectionOther addRowWithTag:OTHER_ENABLE_RAGESHAKE_INDEX];
-    }
-    [sectionOther addRowWithTag:OTHER_MARK_ALL_AS_READ_INDEX];
-    [sectionOther addRowWithTag:OTHER_CLEAR_CACHE_INDEX];
-    if (BuildSettings.settingsScreenAllowBugReportingManually)
-    {
-        [sectionOther addRowWithTag:OTHER_REPORT_BUG_INDEX];
-    }
-    sectionOther.headerTitle = NSLocalizedStringFromTable(@"settings_other", @"Vector", nil);
-    [tmpSections addObject:sectionOther];
-    
-    if (BuildSettings.settingsScreenShowLabSettings)
-    {
-        Section *sectionLabs = [Section sectionWithTag:SECTION_TAG_LABS];
-        [sectionLabs addRowWithTag:LABS_USE_JITSI_WIDGET_INDEX];
-        sectionLabs.headerTitle = NSLocalizedStringFromTable(@"settings_labs", @"Vector", nil);
-        [tmpSections addObject:sectionLabs];
-    }
-    
+  
     if ([groupsDataSource numberOfSectionsInTableView:self.tableView] && groupsDataSource.joinedGroupsSection != -1)
     {
         NSInteger count = [groupsDataSource tableView:self.tableView
@@ -875,21 +728,6 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             [newEmailTextField resignFirstResponder];
             newEmailTextField = nil;
         }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [self.tableView beginUpdates];
-            
-            // Refresh the corresponding table view cell with animation
-            NSIndexPath *addEmailIndexPath = [self exactIndexPathForRowTag:USER_SETTINGS_ADD_EMAIL_INDEX
-                                                                sectionTag:SECTION_TAG_USER_SETTINGS];
-            if (addEmailIndexPath)
-            {
-                [self.tableView reloadRowsAtIndexPaths:@[addEmailIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            }
-            
-            [self.tableView endUpdates];            
-        });
     }
 }
 
@@ -906,21 +744,6 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             [newPhoneNumberCell.mxkTextField resignFirstResponder];
             newPhoneNumberCell = nil;
         }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [self.tableView beginUpdates];
-            
-            // Refresh the corresponding table view cell with animation
-            NSIndexPath *addPhoneIndexPath = [self exactIndexPathForRowTag:USER_SETTINGS_ADD_PHONENUMBER_INDEX
-                                                                sectionTag:SECTION_TAG_USER_SETTINGS];
-            if (addPhoneIndexPath)
-            {
-                [self.tableView reloadRowsAtIndexPaths:@[addPhoneIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            }
-            
-            [self.tableView endUpdates];
-        });
     }
 }
 
@@ -1661,409 +1484,73 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             
             cell = phoneCell;
         }
-        else if (row == USER_SETTINGS_ADD_EMAIL_INDEX)
-        {
-            MXKTableViewCellWithLabelAndTextField *newEmailCell = [self getLabelAndTextFieldCell:tableView forIndexPath:indexPath];
-
-            // Render the cell according to the `newEmailEditingEnabled` property
-            if (!_newEmailEditingEnabled)
-            {
-                newEmailCell.mxkLabel.text = NSLocalizedStringFromTable(@"settings_add_email_address", @"Vector", nil);
-                newEmailCell.mxkTextField.text = nil;
-                newEmailCell.mxkTextField.userInteractionEnabled = NO;
-                newEmailCell.accessoryView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"plus_icon"] vc_tintedImageUsingColor:ThemeService.shared.theme.textPrimaryColor]];
-            }
-            else
-            {
-                newEmailCell.mxkLabel.text = nil;
-                newEmailCell.mxkTextField.placeholder = NSLocalizedStringFromTable(@"settings_email_address_placeholder", @"Vector", nil);
-                newEmailCell.mxkTextField.attributedPlaceholder = [[NSAttributedString alloc]
-                                                                   initWithString:newEmailCell.mxkTextField.placeholder
-                                                                   attributes:@{NSForegroundColorAttributeName: ThemeService.shared.theme.placeholderTextColor}];
-                newEmailCell.mxkTextField.text = newEmailTextField.text;
-                newEmailCell.mxkTextField.userInteractionEnabled = YES;
-                newEmailCell.mxkTextField.keyboardType = UIKeyboardTypeEmailAddress;
-                newEmailCell.mxkTextField.autocorrectionType = UITextAutocorrectionTypeNo;
-                newEmailCell.mxkTextField.spellCheckingType = UITextSpellCheckingTypeNo;
-                newEmailCell.mxkTextField.delegate = self;
-                newEmailCell.mxkTextField.accessibilityIdentifier=@"SettingsVCAddEmailTextField";
-
-                [newEmailCell.mxkTextField removeTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-                [newEmailCell.mxkTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-
-                [newEmailCell.mxkTextField removeTarget:self action:@selector(textFieldDidEnd:) forControlEvents:UIControlEventEditingDidEnd];
-                [newEmailCell.mxkTextField addTarget:self action:@selector(textFieldDidEnd:) forControlEvents:UIControlEventEditingDidEnd];
-
-                // When displaying the textfield the 1st time, open the keyboard
-                if (!newEmailTextField)
-                {
-                    newEmailTextField = newEmailCell.mxkTextField;
-                    [self editNewEmailTextField];
-                }
-                else
-                {
-                    // Update the current text field.
-                    newEmailTextField = newEmailCell.mxkTextField;
-                }
-                
-                UIImage *accessoryViewImage = [[UIImage imageNamed:@"plus_icon"] vc_tintedImageUsingColor:ThemeService.shared.theme.tintColor];
-                newEmailCell.accessoryView = [[UIImageView alloc] initWithImage:accessoryViewImage];
-            }
-            
-            newEmailCell.mxkTextField.tag = row;
-
-            cell = newEmailCell;
-        }
-        else if (row == USER_SETTINGS_ADD_PHONENUMBER_INDEX)
-        {
-            // Render the cell according to the `newPhoneEditingEnabled` property
-            if (!_newPhoneEditingEnabled)
-            {
-                MXKTableViewCellWithLabelAndTextField *newPhoneCell = [self getLabelAndTextFieldCell:tableView forIndexPath:indexPath];
-                
-                newPhoneCell.mxkLabel.text = NSLocalizedStringFromTable(@"settings_add_phone_number", @"Vector", nil);
-                newPhoneCell.mxkTextField.text = nil;
-                newPhoneCell.mxkTextField.userInteractionEnabled = NO;
-                newPhoneCell.accessoryView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"plus_icon"] vc_tintedImageUsingColor:ThemeService.shared.theme.textPrimaryColor]];
-                
-                cell = newPhoneCell;
-            }
-            else
-            {
-                TableViewCellWithPhoneNumberTextField * newPhoneCell = [self.tableView dequeueReusableCellWithIdentifier:[TableViewCellWithPhoneNumberTextField defaultReuseIdentifier] forIndexPath:indexPath];
-                
-                [newPhoneCell.countryCodeButton removeTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
-                [newPhoneCell.countryCodeButton addTarget:self action:@selector(selectPhoneNumberCountry:) forControlEvents:UIControlEventTouchUpInside];
-                newPhoneCell.countryCodeButton.accessibilityIdentifier = @"SettingsVCPhoneCountryButton";
-                
-                newPhoneCell.mxkLabel.font = newPhoneCell.mxkTextField.font = [UIFont systemFontOfSize:16];
-                newPhoneCell.mxkTextField.textColor = ThemeService.shared.theme.textSecondaryColor;                
-                
-                newPhoneCell.mxkTextField.userInteractionEnabled = YES;
-                newPhoneCell.mxkTextField.keyboardType = UIKeyboardTypePhonePad;
-                newPhoneCell.mxkTextField.autocorrectionType = UITextAutocorrectionTypeNo;
-                newPhoneCell.mxkTextField.spellCheckingType = UITextSpellCheckingTypeNo;
-                newPhoneCell.mxkTextField.delegate = self;
-                newPhoneCell.mxkTextField.accessibilityIdentifier=@"SettingsVCAddPhoneTextField";
-                
-                [newPhoneCell.mxkTextField removeTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-                [newPhoneCell.mxkTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-                
-                [newPhoneCell.mxkTextField removeTarget:self action:@selector(textFieldDidEnd:) forControlEvents:UIControlEventEditingDidEnd];
-                [newPhoneCell.mxkTextField addTarget:self action:@selector(textFieldDidEnd:) forControlEvents:UIControlEventEditingDidEnd];
-                
-                newPhoneCell.mxkTextField.tag = row;
-                
-                // When displaying the textfield the 1st time, open the keyboard
-                if (!newPhoneNumberCell)
-                {
-                    NSString *countryCode = [MXKAppSettings standardAppSettings].phonebookCountryCode;
-                    if (!countryCode)
-                    {
-                        // If none, consider the preferred locale
-                        NSLocale *local = [[NSLocale alloc] initWithLocaleIdentifier:[[NSBundle mainBundle] preferredLocalizations][0]];
-                        if ([local respondsToSelector:@selector(countryCode)])
-                        {
-                            countryCode = local.countryCode;
-                        }
-                        
-                        if (!countryCode)
-                        {
-                            countryCode = @"GB";
-                        }
-                    }
-                    newPhoneCell.isoCountryCode = countryCode;
-                    newPhoneCell.mxkTextField.text = nil;
-                    
-                    newPhoneNumberCell = newPhoneCell;
-
-                    [self editNewPhoneNumberTextField];
-                }
-                else
-                {
-                    newPhoneCell.isoCountryCode = newPhoneNumberCell.isoCountryCode;
-                    newPhoneCell.mxkTextField.text = newPhoneNumberCell.mxkTextField.text;
-                    
-                    newPhoneNumberCell = newPhoneCell;
-                }
-                
-                UIImage *accessoryViewImage = [[UIImage imageNamed:@"plus_icon"] vc_tintedImageUsingColor:ThemeService.shared.theme.tintColor];
-                newPhoneCell.accessoryView = [[UIImageView alloc] initWithImage:accessoryViewImage];
-                
-                cell = newPhoneCell;
-            }
-        }
-        else if (row == USER_SETTINGS_THREEPIDS_INFORMATION_INDEX)
-        {
-            MXKTableViewCell *threePidsInformationCell = [self getDefaultTableViewCell:self.tableView];
-            
-            NSMutableAttributedString *attributedString =  [[NSMutableAttributedString alloc] initWithString:NSLocalizedStringFromTable(@"settings_three_pids_management_information_part1", @"Vector", nil) attributes:@{NSForegroundColorAttributeName: ThemeService.shared.theme.textPrimaryColor}];
-            [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedStringFromTable(@"settings_three_pids_management_information_part2", @"Vector", nil) attributes:@{NSForegroundColorAttributeName: ThemeService.shared.theme.tintColor}]];
-            [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedStringFromTable(@"settings_three_pids_management_information_part3", @"Vector", nil) attributes:@{NSForegroundColorAttributeName: ThemeService.shared.theme.textPrimaryColor}]];
-            
-            threePidsInformationCell.textLabel.attributedText = attributedString;
-            threePidsInformationCell.textLabel.numberOfLines = 0;
-            
-            threePidsInformationCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-            cell = threePidsInformationCell;
-        }
-        else if (row == USER_SETTINGS_CHANGE_PASSWORD_INDEX)
-        {
-            MXKTableViewCellWithLabelAndTextField *passwordCell = [self getLabelAndTextFieldCell:tableView forIndexPath:indexPath];
-            
-            passwordCell.mxkLabel.text = NSLocalizedStringFromTable(@"settings_change_password", @"Vector", nil);
-            passwordCell.mxkTextField.text = @"*********";
-            passwordCell.mxkTextField.userInteractionEnabled = NO;
-            passwordCell.mxkLabel.accessibilityIdentifier=@"SettingsVCChangePwdStaticText";
-            
-            cell = passwordCell;
-        }
     }
-    else if (section == SECTION_TAG_NOTIFICATIONS)
-    {
-        if (row == NOTIFICATION_SETTINGS_ENABLE_PUSH_INDEX)
-        {
-            MXKTableViewCellWithLabelAndSwitch* labelAndSwitchCell = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
-    
-            labelAndSwitchCell.mxkLabel.text = NSLocalizedStringFromTable(@"settings_enable_push_notif", @"Vector", nil);
-            labelAndSwitchCell.mxkSwitch.on = account.pushNotificationServiceIsActive;
-            labelAndSwitchCell.mxkSwitch.onTintColor = ThemeService.shared.theme.tintColor;
-            labelAndSwitchCell.mxkSwitch.enabled = YES;
-            [labelAndSwitchCell.mxkSwitch addTarget:self action:@selector(togglePushNotifications:) forControlEvents:UIControlEventTouchUpInside];
-            
-            cell = labelAndSwitchCell;
-        }
-        else if (row == NOTIFICATION_SETTINGS_SHOW_DECODED_CONTENT)
-        {
-            MXKTableViewCellWithLabelAndSwitch* labelAndSwitchCell = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
-            
-            labelAndSwitchCell.mxkLabel.text = NSLocalizedStringFromTable(@"settings_show_decrypted_content", @"Vector", nil);
-            labelAndSwitchCell.mxkSwitch.on = RiotSettings.shared.showDecryptedContentInNotifications;
-            labelAndSwitchCell.mxkSwitch.onTintColor = ThemeService.shared.theme.tintColor;
-            labelAndSwitchCell.mxkSwitch.enabled = account.pushNotificationServiceIsActive;
-            [labelAndSwitchCell.mxkSwitch addTarget:self action:@selector(toggleShowDecodedContent:) forControlEvents:UIControlEventTouchUpInside];
-            
-            
-            cell = labelAndSwitchCell;
-        }
-        else if (row == NOTIFICATION_SETTINGS_GLOBAL_SETTINGS_INDEX)
-        {
-            MXKTableViewCell *globalInfoCell = [self getDefaultTableViewCell:tableView];
+  else if (section == SECTION_TAG_USER_INTERFACE)
+  {
+      if (row == USER_INTERFACE_LANGUAGE_INDEX)
+      {
+          cell = [tableView dequeueReusableCellWithIdentifier:kSettingsViewControllerPhoneBookCountryCellId];
+          if (!cell)
+          {
+              cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kSettingsViewControllerPhoneBookCountryCellId];
+          }
 
-            NSString *appDisplayName = [[NSBundle mainBundle] infoDictionary][@"CFBundleDisplayName"];
+          NSString *language = [NSBundle mxk_language];
+          if (!language)
+          {
+              language = [MXKLanguagePickerViewController defaultLanguage];
+          }
+          NSString *languageDescription = [MXKLanguagePickerViewController languageDescription:language];
 
-            globalInfoCell.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(@"settings_global_settings_info", @"Vector", nil), appDisplayName];
-            globalInfoCell.textLabel.numberOfLines = 0;
-            
-            globalInfoCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-            cell = globalInfoCell;
-        }
-        else if (row == NOTIFICATION_SETTINGS_PIN_MISSED_NOTIFICATIONS_INDEX)
-        {
-            MXKTableViewCellWithLabelAndSwitch* labelAndSwitchCell = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
-            
-            labelAndSwitchCell.mxkLabel.text = NSLocalizedStringFromTable(@"settings_pin_rooms_with_missed_notif", @"Vector", nil);
-            labelAndSwitchCell.mxkSwitch.on = RiotSettings.shared.pinRoomsWithMissedNotificationsOnHome;
-            labelAndSwitchCell.mxkSwitch.onTintColor = ThemeService.shared.theme.tintColor;
-            labelAndSwitchCell.mxkSwitch.enabled = YES;
-            [labelAndSwitchCell.mxkSwitch addTarget:self action:@selector(togglePinRoomsWithMissedNotif:) forControlEvents:UIControlEventTouchUpInside];
-            
-            cell = labelAndSwitchCell;
-        }
-        else if (row == NOTIFICATION_SETTINGS_PIN_UNREAD_INDEX)
-        {
-            MXKTableViewCellWithLabelAndSwitch* labelAndSwitchCell = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
-            
-            labelAndSwitchCell.mxkLabel.text = NSLocalizedStringFromTable(@"settings_pin_rooms_with_unread", @"Vector", nil);
-            labelAndSwitchCell.mxkSwitch.on = RiotSettings.shared.pinRoomsWithUnreadMessagesOnHome;
-            labelAndSwitchCell.mxkSwitch.onTintColor = ThemeService.shared.theme.tintColor;
-            labelAndSwitchCell.mxkSwitch.enabled = YES;
-            [labelAndSwitchCell.mxkSwitch addTarget:self action:@selector(togglePinRoomsWithUnread:) forControlEvents:UIControlEventTouchUpInside];
-            
-            cell = labelAndSwitchCell;
-        }
-    }
-    else if (section == SECTION_TAG_CALLS)
-    {
-        if (row == CALLS_ENABLE_STUN_SERVER_FALLBACK_INDEX)
-        {
-            MXKTableViewCellWithLabelAndSwitch* labelAndSwitchCell = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
-            labelAndSwitchCell.mxkLabel.text = NSLocalizedStringFromTable(@"settings_calls_stun_server_fallback_button", @"Vector", nil);
-            labelAndSwitchCell.mxkSwitch.on = RiotSettings.shared.allowStunServerFallback;
-            labelAndSwitchCell.mxkSwitch.onTintColor = ThemeService.shared.theme.tintColor;
-            labelAndSwitchCell.mxkSwitch.enabled = YES;
-            [labelAndSwitchCell.mxkSwitch addTarget:self action:@selector(toggleStunServerFallback:) forControlEvents:UIControlEventTouchUpInside];
+          // Capitalise the description in the language locale
+          NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:language];
+          languageDescription = [languageDescription capitalizedStringWithLocale:locale];
 
-            cell = labelAndSwitchCell;
-        }
-        else if (row == CALLS_STUN_SERVER_FALLBACK_DESCRIPTION_INDEX)
-        {
-            NSString *stunFallbackHost = BuildSettings.stunServerFallbackUrlString;
-            // Remove "stun:"
-            stunFallbackHost = [stunFallbackHost componentsSeparatedByString:@":"].lastObject;
+          cell.textLabel.textColor = ThemeService.shared.theme.textPrimaryColor;
 
-            MXKTableViewCell *globalInfoCell = [self getDefaultTableViewCell:tableView];
-            globalInfoCell.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(@"settings_calls_stun_server_fallback_description", @"Vector", nil), stunFallbackHost];
-            globalInfoCell.textLabel.numberOfLines = 0;
-            globalInfoCell.selectionStyle = UITableViewCellSelectionStyleNone;
+          cell.textLabel.text = NSLocalizedStringFromTable(@"settings_ui_language", @"Vector", nil);
+          cell.detailTextLabel.text = languageDescription;
 
-            cell = globalInfoCell;
-        }
-    }
-    else if (section == SECTION_TAG_DISCOVERY)
-    {
-        cell = [self.settingsDiscoveryTableViewSection cellForRowAtRow:row];
-    }
-    else if (section == SECTION_TAG_IDENTITY_SERVER)
-    {
-        switch (row)
-        {
-            case IDENTITY_SERVER_INDEX:
-            {
-                MXKTableViewCell *isCell = [self getDefaultTableViewCell:tableView];
+          [cell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
+          cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+      }
+      else if (row == USER_INTERFACE_THEME_INDEX)
+      {
+          cell = [tableView dequeueReusableCellWithIdentifier:kSettingsViewControllerPhoneBookCountryCellId];
+          if (!cell)
+          {
+              cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kSettingsViewControllerPhoneBookCountryCellId];
+          }
 
-                if (account.mxSession.identityService.identityServer)
-                {
-                    isCell.textLabel.text = account.mxSession.identityService.identityServer;
-                }
-                else
-                {
-                    isCell.textLabel.text = NSLocalizedStringFromTable(@"settings_identity_server_no_is", @"Vector", nil);
-                }
-                [isCell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
-                cell = isCell;
-                break;
-            }
+          NSString *theme = RiotSettings.shared.userInterfaceTheme;
+          
+          if (!theme)
+          {
+              if (@available(iOS 11.0, *))
+              {
+                  // "auto" is used the default value from iOS 11
+                  theme = @"auto";
+              }
+              else
+              {
+                  // Use "light" for older version
+                  theme = @"light";
+              }
+          }
 
-            case IDENTITY_SERVER_DESCRIPTION_INDEX:
-            {
-                MXKTableViewCell *descriptionCell = [self getDefaultTableViewCell:tableView];
+          theme = [NSString stringWithFormat:@"settings_ui_theme_%@", theme];
+          NSString *i18nTheme = NSLocalizedStringFromTable(theme,
+                                                            @"Vector",
+                                                           nil);
 
-                if (account.mxSession.identityService.identityServer)
-                {
-                    descriptionCell.textLabel.text = NSLocalizedStringFromTable(@"settings_identity_server_description", @"Vector", nil);
-                }
-                else
-                {
-                    descriptionCell.textLabel.text = NSLocalizedStringFromTable(@"settings_identity_server_no_is_description", @"Vector", nil);
-                }
-                descriptionCell.textLabel.numberOfLines = 0;
-                descriptionCell.selectionStyle = UITableViewCellSelectionStyleNone;
+          cell.textLabel.textColor = ThemeService.shared.theme.textPrimaryColor;
 
-                cell = descriptionCell;
-                break;
-            }
+          cell.textLabel.text = NSLocalizedStringFromTable(@"settings_ui_theme", @"Vector", nil);
+          cell.detailTextLabel.text = i18nTheme;
 
-            default:
-                break;
-        }
-    }
-    else if (section == SECTION_TAG_INTEGRATIONS)
-    {
-        switch (row) {
-            case INTEGRATIONS_INDEX:
-            {
-                RiotSharedSettings *sharedSettings = [[RiotSharedSettings alloc] initWithSession:session];
-
-                MXKTableViewCellWithLabelAndSwitch* labelAndSwitchCell = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
-                labelAndSwitchCell.mxkLabel.text = NSLocalizedStringFromTable(@"settings_integrations_allow_button", @"Vector", nil);
-                labelAndSwitchCell.mxkSwitch.on = sharedSettings.hasIntegrationProvisioningEnabled;
-                labelAndSwitchCell.mxkSwitch.onTintColor = ThemeService.shared.theme.tintColor;
-                labelAndSwitchCell.mxkSwitch.enabled = YES;
-                [labelAndSwitchCell.mxkSwitch addTarget:self action:@selector(toggleAllowIntegrations:) forControlEvents:UIControlEventTouchUpInside];
-
-                cell = labelAndSwitchCell;
-                break;
-            }
-
-            case INTEGRATIONS_DESCRIPTION_INDEX:
-            {
-                MXKTableViewCell *descriptionCell = [self getDefaultTableViewCell:tableView];
-
-                NSString *integrationManager = [WidgetManager.sharedManager configForUser:session.myUser.userId].apiUrl;
-                NSString *integrationManagerDomain = [NSURL URLWithString:integrationManager].host;
-
-                NSString *description = [NSString stringWithFormat:NSLocalizedStringFromTable(@"settings_integrations_allow_description", @"Vector", nil), integrationManagerDomain];
-                descriptionCell.textLabel.text = description;
-                descriptionCell.textLabel.numberOfLines = 0;
-                descriptionCell.selectionStyle = UITableViewCellSelectionStyleNone;
-
-                cell = descriptionCell;
-                break;
-            }
-
-            default:
-                break;
-        }
-    }
-    else if (section == SECTION_TAG_USER_INTERFACE)
-    {
-        if (row == USER_INTERFACE_LANGUAGE_INDEX)
-        {
-            cell = [tableView dequeueReusableCellWithIdentifier:kSettingsViewControllerPhoneBookCountryCellId];
-            if (!cell)
-            {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kSettingsViewControllerPhoneBookCountryCellId];
-            }
-
-            NSString *language = [NSBundle mxk_language];
-            if (!language)
-            {
-                language = [MXKLanguagePickerViewController defaultLanguage];
-            }
-            NSString *languageDescription = [MXKLanguagePickerViewController languageDescription:language];
-
-            // Capitalise the description in the language locale
-            NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:language];
-            languageDescription = [languageDescription capitalizedStringWithLocale:locale];
-
-            cell.textLabel.textColor = ThemeService.shared.theme.textPrimaryColor;
-
-            cell.textLabel.text = NSLocalizedStringFromTable(@"settings_ui_language", @"Vector", nil);
-            cell.detailTextLabel.text = languageDescription;
-
-            [cell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
-            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-        }
-        else if (row == USER_INTERFACE_THEME_INDEX)
-        {
-            cell = [tableView dequeueReusableCellWithIdentifier:kSettingsViewControllerPhoneBookCountryCellId];
-            if (!cell)
-            {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kSettingsViewControllerPhoneBookCountryCellId];
-            }
-
-            NSString *theme = RiotSettings.shared.userInterfaceTheme;
-            
-            if (!theme)
-            {
-                if (@available(iOS 11.0, *))
-                {
-                    // "auto" is used the default value from iOS 11
-                    theme = @"auto";
-                }
-                else
-                {
-                    // Use "light" for older version
-                    theme = @"light";
-                }
-            }
-
-            theme = [NSString stringWithFormat:@"settings_ui_theme_%@", theme];
-            NSString *i18nTheme = NSLocalizedStringFromTable(theme,
-                                                              @"Vector",
-                                                             nil);
-
-            cell.textLabel.textColor = ThemeService.shared.theme.textPrimaryColor;
-
-            cell.textLabel.text = NSLocalizedStringFromTable(@"settings_ui_theme", @"Vector", nil);
-            cell.detailTextLabel.text = i18nTheme;
-
-            [cell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
-            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-        }
+          [cell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
+          cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+      }
     }
     else if (section == SECTION_TAG_IGNORED_USERS)
     {
@@ -2072,233 +1559,6 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         ignoredUserCell.textLabel.text = session.ignoredUsers[row];
 
         cell = ignoredUserCell;
-    }
-    else if (section == SECTION_TAG_LOCAL_CONTACTS)
-    {
-        if (row == LOCAL_CONTACTS_SYNC_INDEX)
-        {
-            MXKTableViewCellWithLabelAndSwitch* labelAndSwitchCell = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
-
-            labelAndSwitchCell.mxkLabel.numberOfLines = 0;
-            labelAndSwitchCell.mxkLabel.text = NSLocalizedStringFromTable(@"settings_contacts_discover_matrix_users", @"Vector", nil);
-            labelAndSwitchCell.mxkSwitch.on = [MXKAppSettings standardAppSettings].syncLocalContacts;
-            labelAndSwitchCell.mxkSwitch.onTintColor = ThemeService.shared.theme.tintColor;
-            labelAndSwitchCell.mxkSwitch.enabled = YES;
-            [labelAndSwitchCell.mxkSwitch addTarget:self action:@selector(toggleLocalContactsSync:) forControlEvents:UIControlEventTouchUpInside];
-
-            cell = labelAndSwitchCell;
-        }
-        else if (row == LOCAL_CONTACTS_PHONEBOOK_COUNTRY_INDEX)
-        {
-            cell = [tableView dequeueReusableCellWithIdentifier:kSettingsViewControllerPhoneBookCountryCellId];
-            if (!cell)
-            {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kSettingsViewControllerPhoneBookCountryCellId];
-            }
-            
-            NSString* countryCode = [[MXKAppSettings standardAppSettings] phonebookCountryCode];
-            NSLocale *local = [[NSLocale alloc] initWithLocaleIdentifier:[[NSBundle mainBundle] preferredLocalizations][0]];
-            NSString *countryName = [local displayNameForKey:NSLocaleCountryCode value:countryCode];
-            
-            cell.textLabel.textColor = ThemeService.shared.theme.textPrimaryColor;
-            
-            cell.textLabel.text = NSLocalizedStringFromTable(@"settings_contacts_phonebook_country", @"Vector", nil);
-            cell.detailTextLabel.text = countryName;
-            
-            [cell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
-            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-        }
-    }
-    else if (section == SECTION_TAG_ADVANCED)
-    {
-        MXKTableViewCellWithTextView *configCell = [self textViewCellForTableView:tableView atIndexPath:indexPath];
-        
-        NSString *configFormat = [NSString stringWithFormat:@"%@\n%@\n%@", [NSBundle mxk_localizedStringForKey:@"settings_config_user_id"], [NSBundle mxk_localizedStringForKey:@"settings_config_home_server"], [NSBundle mxk_localizedStringForKey:@"settings_config_identity_server"]];
-        
-        configCell.mxkTextView.text =[NSString stringWithFormat:configFormat, account.mxCredentials.userId, account.mxCredentials.homeServer, account.identityServerURL];
-        configCell.mxkTextView.accessibilityIdentifier=@"SettingsVCConfigStaticText";
-        
-        cell = configCell;
-    }
-    else if (section == SECTION_TAG_OTHER)
-    {
-        if (row == OTHER_VERSION_INDEX)
-        {
-            MXKTableViewCell *versionCell = [self getDefaultTableViewCell:tableView];
-            
-            NSString* appVersion = [AppDelegate theDelegate].appVersion;
-            NSString* build = [AppDelegate theDelegate].build;
-            
-            versionCell.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(@"settings_version", @"Vector", nil), [NSString stringWithFormat:@"%@ %@", appVersion, build]];
-            
-            versionCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-            cell = versionCell;
-        }
-        else if (row == OTHER_OLM_VERSION_INDEX)
-        {
-            MXKTableViewCell *versionCell = [self getDefaultTableViewCell:tableView];
-            
-            versionCell.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(@"settings_olm_version", @"Vector", nil), [OLMKit versionString]];
-            
-            versionCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-            cell = versionCell;
-        }
-        else if (row == OTHER_TERM_CONDITIONS_INDEX)
-        {
-            MXKTableViewCell *termAndConditionCell = [self getDefaultTableViewCell:tableView];
-
-            termAndConditionCell.textLabel.text = NSLocalizedStringFromTable(@"settings_term_conditions", @"Vector", nil);
-            
-            [termAndConditionCell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
-            
-            cell = termAndConditionCell;
-        }
-        else if (row == OTHER_COPYRIGHT_INDEX)
-        {
-            MXKTableViewCell *copyrightCell = [self getDefaultTableViewCell:tableView];
-
-            copyrightCell.textLabel.text = NSLocalizedStringFromTable(@"settings_copyright", @"Vector", nil);
-            
-            [copyrightCell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
-            
-            cell = copyrightCell;
-        }
-        else if (row == OTHER_PRIVACY_INDEX)
-        {
-            MXKTableViewCell *privacyPolicyCell = [self getDefaultTableViewCell:tableView];
-            
-            privacyPolicyCell.textLabel.text = NSLocalizedStringFromTable(@"settings_privacy_policy", @"Vector", nil);
-            
-            [privacyPolicyCell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
-            
-            cell = privacyPolicyCell;
-        }
-        else if (row == OTHER_THIRD_PARTY_INDEX)
-        {
-            MXKTableViewCell *thirdPartyCell = [self getDefaultTableViewCell:tableView];
-            
-            thirdPartyCell.textLabel.text = NSLocalizedStringFromTable(@"settings_third_party_notices", @"Vector", nil);
-            
-            [thirdPartyCell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
-            
-            cell = thirdPartyCell;
-        }
-        else if (row == OTHER_CRASH_REPORT_INDEX)
-        {
-            MXKTableViewCellWithLabelAndSwitch* sendCrashReportCell = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
-            
-            sendCrashReportCell.mxkLabel.text = NSLocalizedStringFromTable(@"settings_send_crash_report", @"Vector", nil);
-            sendCrashReportCell.mxkSwitch.on = RiotSettings.shared.enableCrashReport;
-            sendCrashReportCell.mxkSwitch.onTintColor = ThemeService.shared.theme.tintColor;
-            sendCrashReportCell.mxkSwitch.enabled = YES;
-            [sendCrashReportCell.mxkSwitch addTarget:self action:@selector(toggleSendCrashReport:) forControlEvents:UIControlEventTouchUpInside];
-            
-            cell = sendCrashReportCell;
-        }
-        else if (row == OTHER_ENABLE_RAGESHAKE_INDEX)
-        {
-            MXKTableViewCellWithLabelAndSwitch* enableRageShakeCell = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
-
-            enableRageShakeCell.mxkLabel.text = NSLocalizedStringFromTable(@"settings_enable_rageshake", @"Vector", nil);
-            enableRageShakeCell.mxkSwitch.on = RiotSettings.shared.enableRageShake;
-            enableRageShakeCell.mxkSwitch.onTintColor = ThemeService.shared.theme.tintColor;
-            enableRageShakeCell.mxkSwitch.enabled = YES;
-            [enableRageShakeCell.mxkSwitch addTarget:self action:@selector(toggleEnableRageShake:) forControlEvents:UIControlEventTouchUpInside];
-
-            cell = enableRageShakeCell;
-        }
-        else if (row == OTHER_MARK_ALL_AS_READ_INDEX)
-        {
-            MXKTableViewCellWithButton *markAllBtnCell = [tableView dequeueReusableCellWithIdentifier:[MXKTableViewCellWithButton defaultReuseIdentifier]];
-            if (!markAllBtnCell)
-            {
-                markAllBtnCell = [[MXKTableViewCellWithButton alloc] init];
-            }
-            else
-            {
-                // Fix https://github.com/vector-im/riot-ios/issues/1354
-                markAllBtnCell.mxkButton.titleLabel.text = nil;
-            }
-            
-            NSString *btnTitle = NSLocalizedStringFromTable(@"settings_mark_all_as_read", @"Vector", nil);
-            [markAllBtnCell.mxkButton setTitle:btnTitle forState:UIControlStateNormal];
-            [markAllBtnCell.mxkButton setTitle:btnTitle forState:UIControlStateHighlighted];
-            [markAllBtnCell.mxkButton setTintColor:ThemeService.shared.theme.tintColor];
-            markAllBtnCell.mxkButton.titleLabel.font = [UIFont systemFontOfSize:17];
-            
-            [markAllBtnCell.mxkButton removeTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
-            [markAllBtnCell.mxkButton addTarget:self action:@selector(markAllAsRead:) forControlEvents:UIControlEventTouchUpInside];
-            markAllBtnCell.mxkButton.accessibilityIdentifier = nil;
-            
-            cell = markAllBtnCell;
-        }
-        else if (row == OTHER_CLEAR_CACHE_INDEX)
-        {
-            MXKTableViewCellWithButton *clearCacheBtnCell = [tableView dequeueReusableCellWithIdentifier:[MXKTableViewCellWithButton defaultReuseIdentifier]];
-            if (!clearCacheBtnCell)
-            {
-                clearCacheBtnCell = [[MXKTableViewCellWithButton alloc] init];
-            }
-            else
-            {
-                // Fix https://github.com/vector-im/riot-ios/issues/1354
-                clearCacheBtnCell.mxkButton.titleLabel.text = nil;
-            }
-            
-            NSString *btnTitle = NSLocalizedStringFromTable(@"settings_clear_cache", @"Vector", nil);
-            [clearCacheBtnCell.mxkButton setTitle:btnTitle forState:UIControlStateNormal];
-            [clearCacheBtnCell.mxkButton setTitle:btnTitle forState:UIControlStateHighlighted];
-            [clearCacheBtnCell.mxkButton setTintColor:ThemeService.shared.theme.tintColor];
-            clearCacheBtnCell.mxkButton.titleLabel.font = [UIFont systemFontOfSize:17];
-            
-            [clearCacheBtnCell.mxkButton removeTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
-            [clearCacheBtnCell.mxkButton addTarget:self action:@selector(clearCache:) forControlEvents:UIControlEventTouchUpInside];
-            clearCacheBtnCell.mxkButton.accessibilityIdentifier = nil;
-            
-            cell = clearCacheBtnCell;
-        }
-        else if (row == OTHER_REPORT_BUG_INDEX)
-        {
-            MXKTableViewCellWithButton *reportBugBtnCell = [tableView dequeueReusableCellWithIdentifier:[MXKTableViewCellWithButton defaultReuseIdentifier]];
-            if (!reportBugBtnCell)
-            {
-                reportBugBtnCell = [[MXKTableViewCellWithButton alloc] init];
-            }
-            else
-            {
-                // Fix https://github.com/vector-im/riot-ios/issues/1354
-                reportBugBtnCell.mxkButton.titleLabel.text = nil;
-            }
-
-            NSString *btnTitle = NSLocalizedStringFromTable(@"settings_report_bug", @"Vector", nil);
-            [reportBugBtnCell.mxkButton setTitle:btnTitle forState:UIControlStateNormal];
-            [reportBugBtnCell.mxkButton setTitle:btnTitle forState:UIControlStateHighlighted];
-            [reportBugBtnCell.mxkButton setTintColor:ThemeService.shared.theme.tintColor];
-            reportBugBtnCell.mxkButton.titleLabel.font = [UIFont systemFontOfSize:17];
-
-            [reportBugBtnCell.mxkButton removeTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
-            [reportBugBtnCell.mxkButton addTarget:self action:@selector(reportBug:) forControlEvents:UIControlEventTouchUpInside];
-            reportBugBtnCell.mxkButton.accessibilityIdentifier = nil;
-
-            cell = reportBugBtnCell;
-        }
-    }
-    else if (section == SECTION_TAG_LABS)
-    {
-        if (row == LABS_USE_JITSI_WIDGET_INDEX)
-        {
-            MXKTableViewCellWithLabelAndSwitch* labelAndSwitchCell = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
-
-            labelAndSwitchCell.mxkLabel.text = NSLocalizedStringFromTable(@"settings_labs_create_conference_with_jitsi", @"Vector", nil);
-            labelAndSwitchCell.mxkSwitch.on = RiotSettings.shared.createConferenceCallsWithJitsi;
-            labelAndSwitchCell.mxkSwitch.onTintColor = ThemeService.shared.theme.tintColor;
-
-            [labelAndSwitchCell.mxkSwitch addTarget:self action:@selector(toggleJitsiForConference:) forControlEvents:UIControlEventTouchUpInside];
-
-            cell = labelAndSwitchCell;
-        }
     }
     else if (section == SECTION_TAG_FLAIR)
     {
@@ -2530,40 +1790,6 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
                 [self showThemePicker];
             }
         }
-        else if (section == SECTION_TAG_USER_SETTINGS && row == USER_SETTINGS_THREEPIDS_INFORMATION_INDEX)
-        {
-            // settingsDiscoveryTableViewSection is a dynamic section, so check number of rows before scroll to avoid crashes
-            if (self.settingsDiscoveryTableViewSection.numberOfRows > 0)
-            {
-                NSIndexPath *discoveryIndexPath = [self exactIndexPathForRowTag:0 sectionTag:SECTION_TAG_DISCOVERY];
-                if (discoveryIndexPath)
-                {
-                    [tableView scrollToRowAtIndexPath:discoveryIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-                }
-            }
-            else
-            {
-                //  this won't be precise in scroll location, but seems the best option for now
-                NSIndexPath *discoveryIndexPath = [self nearestIndexPathForRowTag:0 sectionTag:SECTION_TAG_DISCOVERY];
-                if (discoveryIndexPath)
-                {
-                    [tableView scrollToRowAtIndexPath:discoveryIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-                }
-            }
-        }
-        else if (section == SECTION_TAG_DISCOVERY)
-        {
-            [self.settingsDiscoveryTableViewSection selectRow:row];
-        }
-        else if (section == SECTION_TAG_IDENTITY_SERVER)
-        {
-            switch (row)
-            {
-                case IDENTITY_SERVER_INDEX:
-                    [self showIdentityServerSettingsScreen];
-                    break;
-            }
-        }
         else if (section == SECTION_TAG_IGNORED_USERS)
         {
             MXSession* session = [AppDelegate theDelegate].mxSessions[0];
@@ -2625,87 +1851,11 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
                 [self presentViewController:currentAlert animated:YES completion:nil];
             }
         }
-        else if (section == SECTION_TAG_OTHER)
-        {
-            if (row == OTHER_COPYRIGHT_INDEX)
-            {
-                WebViewViewController *webViewViewController = [[WebViewViewController alloc] initWithURL:BuildSettings.applicationCopyrightUrlString];
-                
-                webViewViewController.title = NSLocalizedStringFromTable(@"settings_copyright", @"Vector", nil);
-                
-                [self pushViewController:webViewViewController];
-            }
-            else if (row == OTHER_TERM_CONDITIONS_INDEX)
-            {
-                WebViewViewController *webViewViewController = [[WebViewViewController alloc] initWithURL:BuildSettings.applicationTermsConditionsUrlString];
-                
-                webViewViewController.title = NSLocalizedStringFromTable(@"settings_term_conditions", @"Vector", nil);
-                
-                [self pushViewController:webViewViewController];
-            }
-            else if (row == OTHER_PRIVACY_INDEX)
-            {
-                WebViewViewController *webViewViewController = [[WebViewViewController alloc] initWithURL:BuildSettings.applicationPrivacyPolicyUrlString];
-                
-                webViewViewController.title = NSLocalizedStringFromTable(@"settings_privacy_policy", @"Vector", nil);
-                
-                [self pushViewController:webViewViewController];
-            }
-            else if (row == OTHER_THIRD_PARTY_INDEX)
-            {
-                NSString *htmlFile = [[NSBundle mainBundle] pathForResource:@"third_party_licenses" ofType:@"html" inDirectory:nil];
-
-                WebViewViewController *webViewViewController = [[WebViewViewController alloc] initWithLocalHTMLFile:htmlFile];
-                
-                webViewViewController.title = NSLocalizedStringFromTable(@"settings_third_party_notices", @"Vector", nil);
-                
-                [self pushViewController:webViewViewController];
-            }
-        }
         else if (section == SECTION_TAG_USER_SETTINGS)
         {
             if (row == USER_SETTINGS_PROFILE_PICTURE_INDEX)
             {
                 [self onProfileAvatarTap:nil];
-            }
-            else if (row == USER_SETTINGS_CHANGE_PASSWORD_INDEX)
-            {
-                [self displayPasswordAlert];
-            }
-            else if (row == USER_SETTINGS_ADD_EMAIL_INDEX)
-            {
-                if (!self.newEmailEditingEnabled)
-                {
-                    // Enable the new email text field
-                    self.newEmailEditingEnabled = YES;
-                }
-                else if (newEmailTextField)
-                {
-                    [self onAddNewEmail:newEmailTextField];
-                }
-            }
-            else if (row == USER_SETTINGS_ADD_PHONENUMBER_INDEX)
-            {
-                if (!self.newPhoneEditingEnabled)
-                {
-                    // Enable the new phone text field
-                    self.newPhoneEditingEnabled = YES;
-                }
-                else if (newPhoneNumberCell.mxkTextField)
-                {
-                    [self onAddNewPhone:newPhoneNumberCell.mxkTextField];
-                }
-            }
-        }
-        else if (section == SECTION_TAG_LOCAL_CONTACTS)
-        {
-            if (row == LOCAL_CONTACTS_PHONEBOOK_COUNTRY_INDEX)
-            {
-                CountryPickerViewController *countryPicker = [CountryPickerViewController countryPickerViewController];
-                countryPicker.view.tag = SECTION_TAG_LOCAL_CONTACTS;
-                countryPicker.delegate = self;
-                countryPicker.showCountryCallingCode = YES;
-                [self pushViewController:countryPicker];
             }
         }
         else if (section == SECTION_TAG_SECURITY)
@@ -3760,28 +2910,11 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         newDisplayName = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         [self updateSaveButtonStatus];
     }
-    else if (textField.tag == USER_SETTINGS_ADD_PHONENUMBER_INDEX)
-    {
-        newPhoneNumber = [[NBPhoneNumberUtil sharedInstance] parse:textField.text defaultRegion:newPhoneNumberCell.isoCountryCode error:nil];
-        
-        [self formatNewPhoneNumber];
-    }
 }
 
 - (IBAction)textFieldDidEnd:(id)sender
 {
     UITextField* textField = (UITextField*)sender;
-
-    // Disable the new email edition if the user leaves the text field empty
-    if (textField.tag == USER_SETTINGS_ADD_EMAIL_INDEX && textField.text.length == 0 && !keepNewEmailEditing)
-    {
-        self.newEmailEditingEnabled = NO;
-    }
-    else if (textField.tag == USER_SETTINGS_ADD_PHONENUMBER_INDEX && textField.text.length == 0 && !keepNewPhoneNumberEditing && !newPhoneNumberCountryPicker)
-    {
-        // Disable the new phone edition if the user leaves the text field empty
-        self.newPhoneEditingEnabled = NO;
-    }
 }
 
 #pragma mark - UITextField delegate
@@ -3807,10 +2940,6 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     if (textField.tag == USER_SETTINGS_DISPLAYNAME_INDEX)
     {
         [textField resignFirstResponder];
-    }
-    else if (textField.tag == USER_SETTINGS_ADD_EMAIL_INDEX)
-    {
-        [self onAddNewEmail:textField];
     }
     
     return YES;
@@ -4001,29 +3130,6 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     [resetPwdAlertController addAction:cancel];
     [resetPwdAlertController addAction:savePasswordAction];
     [self presentViewController:resetPwdAlertController animated:YES completion:nil];
-}
-
-
-#pragma mark - MXKCountryPickerViewControllerDelegate
-
-- (void)countryPickerViewController:(MXKCountryPickerViewController *)countryPickerViewController didSelectCountry:(NSString *)isoCountryCode
-{
-    if (countryPickerViewController.view.tag == SECTION_TAG_LOCAL_CONTACTS)
-    {
-        [MXKAppSettings standardAppSettings].phonebookCountryCode = isoCountryCode;
-    }
-    else if (countryPickerViewController.view.tag == SECTION_TAG_USER_SETTINGS)
-    {
-        if (newPhoneNumberCell)
-        {
-            newPhoneNumberCell.isoCountryCode = isoCountryCode;
-            
-            newPhoneNumber = [[NBPhoneNumberUtil sharedInstance] parse:newPhoneNumberCell.mxkTextField.text defaultRegion:isoCountryCode error:nil];
-            [self formatNewPhoneNumber];
-        }
-    }
-    
-    [countryPickerViewController withdrawViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - MXKCountryPickerViewControllerDelegate
@@ -4278,14 +3384,6 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     {
         tableViewCell = [self getDefaultTableViewCell:self.tableView];
     }
-    else if ([tableViewCellClass isEqual:[MXKTableViewCellWithTextView class]])
-    {
-        NSIndexPath *indexPath = [self exactIndexPathForRowTag:forRow sectionTag:SECTION_TAG_DISCOVERY];
-        if (indexPath)
-        {
-            tableViewCell = [self textViewCellForTableView:self.tableView atIndexPath:indexPath];
-        }
-    }
     else if ([tableViewCellClass isEqual:[MXKTableViewCellWithButton class]])
     {
         MXKTableViewCellWithButton *cell = [self.tableView dequeueReusableCellWithIdentifier:[MXKTableViewCellWithButton defaultReuseIdentifier]];
@@ -4304,14 +3402,6 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         [cell.mxkButton setTintColor:ThemeService.shared.theme.tintColor];
         
         tableViewCell = cell;
-    }
-    else if ([tableViewCellClass isEqual:[MXKTableViewCellWithLabelAndSwitch class]])
-    {
-        NSIndexPath *indexPath = [self exactIndexPathForRowTag:forRow sectionTag:SECTION_TAG_DISCOVERY];
-        if (indexPath)
-        {
-            tableViewCell = [self getLabelAndSwitchCell:self.tableView forIndexPath:indexPath];
-        }
     }
     
     return tableViewCell;
@@ -4332,16 +3422,6 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     }];
     
     self.discoveryThreePidDetailsPresenter = discoveryThreePidDetailsPresenter;
-}
-
-- (void)settingsDiscoveryViewModelDidTapUserSettingsLink:(SettingsDiscoveryViewModel *)viewModel
-{
-    NSIndexPath *discoveryIndexPath = [self exactIndexPathForRowTag:USER_SETTINGS_ADD_EMAIL_INDEX
-                                                         sectionTag:SECTION_TAG_USER_SETTINGS];
-    if (discoveryIndexPath)
-    {
-        [self.tableView scrollToRowAtIndexPath:discoveryIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-    }
 }
 
 

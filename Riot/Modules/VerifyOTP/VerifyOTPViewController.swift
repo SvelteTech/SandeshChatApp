@@ -27,6 +27,7 @@ class VerifyOTPViewController: UIViewController {
   var verifyOTPModel = VerifyOTPViewModel()
   var enteredOTP: String = ""
   var sessionId: String = ""
+  var mxSession: MXSession!
   
   // MARK: - Methodss
   override func viewDidLoad() {
@@ -94,6 +95,7 @@ class VerifyOTPViewController: UIViewController {
         
         if let pinVerificationVC = pinVerificationVC {
           pinVerificationVC.userId = self.sessionId
+          pinVerificationVC.mxSession = self.mxSession
           self.present(pinVerificationVC, animated: true, completion: nil)
         }
       } else {

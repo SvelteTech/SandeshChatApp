@@ -507,6 +507,7 @@
                                                                bundle:nil];
           VerifyOTPViewController *verifyVC = [storyboard instantiateViewControllerWithIdentifier:@"VerifyOTP"];
           verifyVC.sessionId = sessionId;
+          verifyVC.mxSession = session;
           [self presentViewController:verifyVC animated:YES completion: nil];
         });
       } else {
