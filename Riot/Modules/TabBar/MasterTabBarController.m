@@ -85,10 +85,8 @@
 
     // Retrieve the all view controllers
     _homeViewController = self.viewControllers[TABBAR_HOME_INDEX];
-    _favouritesViewController = self.viewControllers[TABBAR_FAVOURITES_INDEX];
     _peopleViewController = self.viewControllers[TABBAR_PEOPLE_INDEX];
     _roomsViewController = self.viewControllers[TABBAR_ROOMS_INDEX];
-    _groupsViewController = self.viewControllers[TABBAR_GROUPS_INDEX];
     
     // Set the accessibility labels for all buttons #1842
     [_settingsBarButtonItem setAccessibilityLabel:NSLocalizedStringFromTable(@"settings_title", @"Vector", nil)];
@@ -100,7 +98,7 @@
     [_groupsViewController setAccessibilityLabel:NSLocalizedStringFromTable(@"title_groups", @"Vector", nil)];
     
     // Sanity check
-    NSAssert(_homeViewController && _favouritesViewController && _peopleViewController && _roomsViewController && _groupsViewController, @"Something wrong in Main.storyboard");
+    NSAssert(_homeViewController && _peopleViewController && _roomsViewController, @"Something wrong in Main.storyboard");
 
     // Adjust the display of the icons in the tabbar.
     for (UITabBarItem *tabBarItem in self.tabBar.items)
@@ -155,7 +153,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     // Show the tab bar view controller content only when a user is logged in.
     self.hidden = ([MXKAccountManager sharedManager].accounts.count == 0);
 }
@@ -302,10 +299,6 @@
         switch (self.selectedIndex)
         {
             case TABBAR_HOME_INDEX:
-                break;
-            case TABBAR_FAVOURITES_INDEX:
-                recentsDataSourceDelegate = _favouritesViewController;
-                recentsDataSourceMode = RecentsDataSourceModeFavourites;
                 break;
             case TABBAR_PEOPLE_INDEX:
                 recentsDataSourceDelegate = _peopleViewController;
@@ -881,11 +874,6 @@
 
 - (void)refreshTabBarBadges
 {
-    // Use a middle dot to signal missed notif in favourites
-    [self setMissedDiscussionsMark:(recentsDataSource.missedFavouriteDiscussionsCount? @"\u00B7": nil)
-                      onTabBarItem:TABBAR_FAVOURITES_INDEX
-                    withBadgeColor:(recentsDataSource.missedHighlightFavouriteDiscussionsCount ? ThemeService.shared.theme.noticeColor : ThemeService.shared.theme.noticeSecondaryColor)];
-    
     // Update the badge on People and Rooms tabs
     [self setMissedDiscussionsCount:recentsDataSource.missedDirectDiscussionsCount
                        onTabBarItem:TABBAR_PEOPLE_INDEX
@@ -1156,10 +1144,6 @@
         else if (item.tag == TABBAR_PEOPLE_INDEX)
         {
             [self.peopleViewController scrollToNextRoomWithMissedNotifications];
-        }
-        else if (item.tag == TABBAR_FAVOURITES_INDEX)
-        {
-            [self.favouritesViewController scrollToNextRoomWithMissedNotifications];
         }
     }
 }
