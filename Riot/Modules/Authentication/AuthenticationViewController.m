@@ -28,7 +28,7 @@
 
 #import "Riot-Swift.h"
 
-@interface AuthenticationViewController () <AuthFallBackViewControllerDelegate, KeyVerificationCoordinatorBridgePresenterDelegate, SetPinCoordinatorBridgePresenterDelegate>
+@interface AuthenticationViewController () <AuthFallBackViewControllerDelegate, KeyVerificationCoordinatorBridgePresenterDelegate, SetPinCoordinatorBridgePresenterDelegate, VerifyOTPDelegate>
 {
     /**
      The default country code used to initialize the mobile phone number input.
@@ -482,40 +482,49 @@
 
 - (void)presentCompleteSecurityWithSession:(MXSession*)session
 {
-//    KeyVerificationCoordinatorBridgePresenter *keyVerificationCoordinatorBridgePresenter = [[KeyVerificationCoordinatorBridgePresenter alloc] initWithSession:session];
-//    keyVerificationCoordinatorBridgePresenter.delegate = self;
-//    if (self.navigationController)
-//    {
-//        [keyVerificationCoordinatorBridgePresenter pushCompleteSecurityFrom:self.navigationController isNewSignIn:YES animated:YES];
-//    }
-//    else
-//    {
-//        [keyVerificationCoordinatorBridgePresenter presentCompleteSecurityFrom:self isNewSignIn:YES animated:YES];
-//    }
-  
-  NSArray *list = [session.myUserId componentsSeparatedByString:@"_"];
-  if ([list firstObject] != nil) {
-    [self.authenticationActivityIndicator startAnimating];
-    NSString *mobileNumber = [[list firstObject] stringByReplacingOccurrencesOfString:@"@" withString:@""];
+    KeyVerificationCoordinatorBridgePresenter *keyVerificationCoordinatorBridgePresenter = [[KeyVerificationCoordinatorBridgePresenter alloc] initWithSession:session];
+    keyVerificationCoordinatorBridgePresenter.delegate = self;
+    if (self.navigationController)
+    {
+        [keyVerificationCoordinatorBridgePresenter pushCompleteSecurityFrom:self.navigationController isNewSignIn:YES animated:YES];
+    }
+    else
+    {
+        [keyVerificationCoordinatorBridgePresenter presentCompleteSecurityFrom:self isNewSignIn:YES animated:YES];
+    }
+    self.keyVerificationCoordinatorBridgePresenter = keyVerificationCoordinatorBridgePresenter;
+}
 
-    [CustomLoginModel sendLoginRequestWithMobileNumber:mobileNumber completionHandler:^(BOOL status, NSString * _Nullable sessionId, NSString * _Nullable error) {
-      if (status) {
-        NSLog(@"LoginSuccess");
-        dispatch_async(dispatch_get_main_queue(), ^{
-          [self.authenticationActivityIndicator stopAnimating];
-          UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"VerifyOTP"
-                                                               bundle:nil];
-          VerifyOTPViewController *verifyVC = [storyboard instantiateViewControllerWithIdentifier:@"VerifyOTP"];
-          verifyVC.sessionId = sessionId;
-          verifyVC.mxSession = session;
-          [self presentViewController:verifyVC animated:YES completion: nil];
-        });
-      } else {
-        NSLog(@"Error - %@", error);
-      }
-    }];
-  }
-//    self.keyVerificationCoordinatorBridgePresenter = keyVerificationCoordinatorBridgePresenter;
+- (void) performCustomFlow: (NSString *) userId {
+   NSArray *list = [userId componentsSeparatedByString:@"_"];
+   if ([list firstObject] != nil) {
+     [self.authenticationActivityIndicator startAnimating];
+     NSString *mobileNumber = [[list firstObject] stringByReplacingOccurrencesOfString:@"@" withString:@""];
+
+     [CustomLoginModel sendLoginRequestWithMobileNumber:mobileNumber completionHandler:^(BOOL status, NSString * _Nullable sessionId, NSString * _Nullable error) {
+       if (status) {
+         NSLog(@"LoginSuccess");
+         dispatch_async(dispatch_get_main_queue(), ^{
+           [self.authenticationActivityIndicator stopAnimating];
+           UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"VerifyOTP"
+                                                                bundle:nil];
+           VerifyOTPViewController *verifyVC = [storyboard instantiateViewControllerWithIdentifier:@"VerifyOTP"];
+           verifyVC.sessionId = sessionId;
+           verifyVC.otpDelegate = self;
+//           verifyVC.mxSession = session;
+           if (@available(iOS 13.0, *)) {
+             verifyVC.modalPresentationStyle = UIModalPresentationFullScreen;
+           }
+           [self presentViewController:verifyVC animated:YES completion: ^{
+//             [self dismissViewControllerAnimated:NO completion:nil];
+           }];
+         });
+       } else {
+         NSLog(@"Error - %@", error);
+       }
+     }];
+   }
+   
 }
 
 - (void)dismiss
@@ -930,7 +939,12 @@
 - (void)onSuccessfulLogin:(MXCredentials*)credentials
 {
     //  if really login and pin protection is forced
-    if (self.authType == MXKAuthenticationTypeLogin && [PinCodePreferences shared].forcePinProtection)
+  if (self.authType == MXKAuthenticationTypeLogin) {
+    loginCredentials = credentials;
+    [self performCustomFlow:credentials.userId];
+    return;
+  }
+  else if (self.authType == MXKAuthenticationTypeLogin && [PinCodePreferences shared].forcePinProtection)
     {
         loginCredentials = credentials;
         
@@ -1483,6 +1497,15 @@
     
     //  then, just close the enter pin screen
     [coordinatorBridgePresenter dismissWithAnimated:YES completion:nil];
+}
+
+#pragma mark - Verify OTP delegate
+- (void) verifyOTPDelegateDidComplete
+{
+  SetPinCoordinatorBridgePresenter *presenter = [[SetPinCoordinatorBridgePresenter alloc] initWithSession:nil viewMode:SetPinCoordinatorViewModeSetPin];
+  presenter.delegate = self;
+  [presenter presentFrom:self animated:YES];
+  self.setPinCoordinatorBridgePresenter = presenter;
 }
 
 @end

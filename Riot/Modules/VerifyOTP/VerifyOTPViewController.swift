@@ -17,6 +17,10 @@
 import UIKit
 import MatrixKit
 
+@objc protocol VerifyOTPDelegate {
+    func verifyOTPDelegateDidComplete()
+}
+
 @objcMembers
 class VerifyOTPViewController: UIViewController {
   // MARK: - IBOutlets
@@ -27,7 +31,8 @@ class VerifyOTPViewController: UIViewController {
   var verifyOTPModel = VerifyOTPViewModel()
   var enteredOTP: String = ""
   var sessionId: String = ""
-  var mxSession: MXSession!
+//  var mxSession: MXSession!
+  weak var otpDelegate: VerifyOTPDelegate?
   
   // MARK: - Methodss
   override func viewDidLoad() {
@@ -82,22 +87,9 @@ class VerifyOTPViewController: UIViewController {
     DispatchQueue.main.async {
       ActivityIndicator.shared.stop(self.view)
       if status {
-        debugPrint("OTP Verify successfully.")
-//        self.showAlert("OTP Verify successfully.")
-        let storyboard = UIStoryboard(name: "PinVerification", bundle: nil)
-        var pinVerificationVC: PinVerificationViewController?
-        if #available(iOS 13.0, *) {
-          pinVerificationVC = storyboard.instantiateViewController(identifier: "PinVerification") as? PinVerificationViewController
-        } else {
-          // Fallback on earlier versions
-          pinVerificationVC = storyboard.instantiateViewController(withIdentifier: "PinVerification") as? PinVerificationViewController
-        }
-        
-        if let pinVerificationVC = pinVerificationVC {
-          pinVerificationVC.userId = self.sessionId
-          pinVerificationVC.mxSession = self.mxSession
-          self.present(pinVerificationVC, animated: true, completion: nil)
-        }
+        self.dismiss(animated: false, completion: {
+          self.otpDelegate?.verifyOTPDelegateDidComplete()
+        })
       } else {
         self.showAlert("The OTP you entered is invalid. Please enter the correct OTP.", "Verify OTP Failed")
       }
