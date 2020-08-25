@@ -1990,7 +1990,7 @@ internal enum VectorL10n {
   internal static var pinProtectionForgotPin: String { 
     return VectorL10n.tr("Vector", "pin_protection_forgot_pin") 
   }
-  /// Please try again
+  /// Pin is not matched. Please enter the same Pin.
   internal static var pinProtectionMismatchErrorMessage: String { 
     return VectorL10n.tr("Vector", "pin_protection_mismatch_error_message") 
   }
