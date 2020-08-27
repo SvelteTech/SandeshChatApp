@@ -4062,7 +4062,7 @@ internal enum VectorL10n {
   internal static var titleHome: String { 
     return VectorL10n.tr("Vector", "title_home") 
   }
-  /// People
+  /// Home
   internal static var titlePeople: String { 
     return VectorL10n.tr("Vector", "title_people") 
   }

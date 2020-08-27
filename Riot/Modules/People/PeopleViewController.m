@@ -52,7 +52,7 @@
     directRoomsSectionNumber = 0;
     contactsSectionNumber = 0;
     
-    self.screenName = @"People";
+    self.screenName = @"Home";
 }
 
 - (void)viewDidLoad

@@ -1125,7 +1125,7 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
     else
     {
         // Select the Home tab
-        _masterTabBarController.selectedIndex = TABBAR_HOME_INDEX;
+        _masterTabBarController.selectedIndex = TABBAR_PEOPLE_INDEX;
         
         if (completion)
         {
