@@ -745,7 +745,7 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
         [application keyWindow].accessibilityIgnoresInvertColors = YES;
     }
     
-    [self handleLaunchAnimation];
+//    [self handleLaunchAnimation];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -1889,7 +1889,7 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
             }
         }
         
-        [self handleLaunchAnimation];
+//        [self handleLaunchAnimation];
     }];
     
     // Register an observer in order to handle new account
