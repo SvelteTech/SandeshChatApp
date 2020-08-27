@@ -161,7 +161,7 @@ final class BuildSettings: NSObject {
     /// Force non-jailbroken app usage
     static let forceNonJailbrokenUsage: Bool = true
     
-    static let allowSendingStickers: Bool = true
+    static let allowSendingStickers: Bool = false
     
     static let allowLocalContactsAccess: Bool = false
     
