@@ -88,6 +88,7 @@
     // Do any additional setup after loading the view, typically from a nib.
 
     self.navigationItem.title = NSLocalizedStringFromTable(@"room_creation_title", @"Vector", nil);
+  [self fetchUserList];
     
     // Add each matrix session by default.
     NSArray *sessions = [AppDelegate theDelegate].mxSessions;
@@ -125,6 +126,21 @@
     
     // Redirect table data source
     self.contactsTableView.dataSource = self;
+}
+
+- (void)fetchUserList
+{
+  [self.activityIndicator startAnimating];
+  [StartChatModel sendFetchListRequest:^(NSArray<Users *> * _Nullable users, NSString * _Nullable error) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self.activityIndicator stopAnimating];
+    });
+    if (users != nil) {
+      NSLog(@"Users[0] - %@", users[0].displayName);
+    } else if (error != nil) {
+      NSLog(@"Error - %@", error);
+    }
+  }];
 }
 
 - (void)userInterfaceThemeDidChange

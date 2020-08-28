@@ -743,6 +743,7 @@
 		D1F5467524EAE8D900A40E38 /* PinField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F5467024EAE8D900A40E38 /* PinField.swift */; };
 		D1F5467624EAE8D900A40E38 /* PinCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1F5467224EAE8D900A40E38 /* PinCell.xib */; };
 		D1F5467724EAE8D900A40E38 /* PinView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1F5467324EAE8D900A40E38 /* PinView.xib */; };
+		D1FFB0CB24F9361D009059C8 /* StartChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FFB0CA24F9361D009059C8 /* StartChatModel.swift */; };
 		DB1392A2332C3CAF6C9962EF /* Pods_RiotPods_RiotNSE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4D418D054E4032F2CFA8B51 /* Pods_RiotPods_RiotNSE.framework */; };
 		EC1CA85F24C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA85124C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift */; };
 		EC1CA86024C1DEC400DE9EBF /* EnterPinCodeViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA85224C1DEC400DE9EBF /* EnterPinCodeViewAction.swift */; };
@@ -1874,6 +1875,7 @@
 		D1F5467024EAE8D900A40E38 /* PinField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinField.swift; sourceTree = "<group>"; };
 		D1F5467224EAE8D900A40E38 /* PinCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinCell.xib; sourceTree = "<group>"; };
 		D1F5467324EAE8D900A40E38 /* PinView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinView.xib; sourceTree = "<group>"; };
+		D1FFB0CA24F9361D009059C8 /* StartChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartChatModel.swift; sourceTree = "<group>"; };
 		E2599D0ECB8DD206624E450B /* Pods-RiotPods-SiriIntents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiotPods-SiriIntents.release.xcconfig"; path = "Target Support Files/Pods-RiotPods-SiriIntents/Pods-RiotPods-SiriIntents.release.xcconfig"; sourceTree = "<group>"; };
 		E4D418D054E4032F2CFA8B51 /* Pods_RiotPods_RiotNSE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RiotPods_RiotNSE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC1CA85124C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPinCodeViewModelType.swift; sourceTree = "<group>"; };
@@ -3574,6 +3576,7 @@
 				B1B556E120EE6C4C00210D55 /* StartChatViewController.h */,
 				B1B556E220EE6C4C00210D55 /* StartChatViewController.m */,
 				B1B556E320EE6C4C00210D55 /* StartChatViewController.xib */,
+				D1FFB0CA24F9361D009059C8 /* StartChatModel.swift */,
 			);
 			path = StartChat;
 			sourceTree = "<group>";
@@ -6281,6 +6284,7 @@
 				3232AB492256558300AD6A5C /* FlowTemplateCoordinatorBridgePresenter.swift in Sources */,
 				B1B5572820EE6C4D00210D55 /* RoomViewController.m in Sources */,
 				B108932123AB8D7D00802670 /* KeyVerificationIncomingRequestApprovalViewData.swift in Sources */,
+				D1FFB0CB24F9361D009059C8 /* StartChatModel.swift in Sources */,
 				EC85D7172477DCD7002C44C9 /* KeyVerificationScanConfirmationViewModel.swift in Sources */,
 				B18DEDDA243377C10075FEF7 /* KeyVerificationSelfVerifyWaitViewState.swift in Sources */,
 				B1B9DEED22EB34EF0065E677 /* ReactionHistoryCoordinator.swift in Sources */,
