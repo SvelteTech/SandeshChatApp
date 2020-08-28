@@ -26,14 +26,22 @@ enum RequestType: String {
 class NetworkManager: NSObject {
   static let shared = NetworkManager()
   
+  private var authorizationHeader: String {
+    return "Bearer \(Constants.accessToken)"
+  }
+  
   private override init() {
     print("Initalized the network manager instance")
   }
   
-  func sendPostRequest(urlString: String, parameters: [String: Any]?, requestType: RequestType = .Post, completionHandler: @escaping(Data?, String?) -> Void) {
+  func sendPostRequest(urlString: String, parameters: [String: Any]?, isAuthorizationRequired: Bool = false, requestType: RequestType = .Post, completionHandler: @escaping(Data?, String?) -> Void) {
     if let url = URL(string: urlString) {
       var urlRequest = URLRequest(url: url)
       urlRequest.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
+      // Add the access token to the header
+      if isAuthorizationRequired {
+        urlRequest.setValue(authorizationHeader, forHTTPHeaderField: "Authorization")
+      }
       urlRequest.httpMethod = requestType.rawValue
       if let parameters = parameters,
         let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) {
