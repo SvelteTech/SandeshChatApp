@@ -54,11 +54,11 @@ class StartChatModel: NSObject {
           user.avatarUrl = avatar_url
           users.append(user)
         }
-        let responseModel = UserModel()
-        responseModel.total = count
-        responseModel.users = users
-        return responseModel
       }
+      let responseModel = UserModel()
+      responseModel.total = count
+      responseModel.users = users
+      return responseModel
     }
     return nil
   }
