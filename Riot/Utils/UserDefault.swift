@@ -16,7 +16,8 @@
 
 import UIKit
 
-struct UserDefault {
+@objcMembers
+class UserDefault: NSObject {
   static let defaults = UserDefaults.standard
   
   static func save(_ key: String, _ value: Any) {

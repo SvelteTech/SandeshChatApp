@@ -33,6 +33,10 @@ class StartChatModel: NSObject {
   
   private static func parseJsonResponse(_ data: Data) -> UserModel? {
     var users = [Users]()
+    var mobileNumber = ""
+    if let mobNumber = UserDefault.retrieve("mobileNumber") as? String {
+      mobileNumber = mobNumber
+    }
     if let jsonResponse = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
       let count = jsonResponse["total"] as? Int,
        let usersResponse = jsonResponse["users"] as? [[String: Any]] {
@@ -44,21 +48,23 @@ class StartChatModel: NSObject {
           let displayname = user["displayname"] as? String {
           let userType = user["user_type"] as? String
           let avatar_url = user["avatar_url"] as? String
-          let user = Users()
-          user.name = name
-          user.isGuest = isGuest == 0 ? false: true
-          user.isAdmin = admin == 0 ? false : true
-          user.isDeactivated = deactivated == 0 ? false : true
-          user.displayName = displayname
-          user.userType = userType
-          user.avatarUrl = avatar_url
-          users.append(user)
+          if admin == 0, !name.contains(mobileNumber) {
+            let user = Users()
+            user.name = name
+            user.isGuest = isGuest == 0 ? false: true
+            user.isAdmin = admin == 0 ? false : true
+            user.isDeactivated = deactivated == 0 ? false : true
+            user.displayName = displayname
+            user.userType = userType
+            user.avatarUrl = avatar_url
+            users.append(user)
+          }
         }
-        let responseModel = UserModel()
-        responseModel.total = count
-        responseModel.users = users
-        return responseModel
       }
+      let responseModel = UserModel()
+      responseModel.total = count
+      responseModel.users = users
+      return responseModel
     }
     return nil
   }
