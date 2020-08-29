@@ -119,7 +119,7 @@ final class BuildSettings: NSObject {
     
     
     // MARK: -  Public rooms Directory
-    static let publicRoomsShowDirectory: Bool = true
+    static let publicRoomsShowDirectory: Bool = false
     static let publicRoomsAllowServerChange: Bool = true
     // List of homeservers for the public rooms directory
     static let publicRoomsDirectoryServers = [
