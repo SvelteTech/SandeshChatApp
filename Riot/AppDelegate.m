@@ -1125,7 +1125,7 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
     else
     {
         // Select the Home tab
-        _masterTabBarController.selectedIndex = TABBAR_HOME_INDEX;
+        _masterTabBarController.selectedIndex = TABBAR_PEOPLE_INDEX;
         
         if (completion)
         {
@@ -1927,14 +1927,14 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
         }
         
         // Load the local contacts on first account creation.
-        if ([MXKAccountManager sharedManager].accounts.count == 1)
-        {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                [self refreshLocalContacts];
-                
-            });
-        }
+//        if ([MXKAccountManager sharedManager].accounts.count == 1)
+//        {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                
+//                [self refreshLocalContacts];
+//                
+//            });
+//        }
     }];
     
     // Add observer to handle removed accounts
@@ -2054,12 +2054,12 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
             [[MXKContactManager sharedManager] addMatrixSession:mxSession];
 
             // Load the local contacts on first account
-            if ([MXKAccountManager sharedManager].accounts.count == 1)
-            {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self refreshLocalContacts];
-                });
-            }
+//            if ([MXKAccountManager sharedManager].accounts.count == 1)
+//            {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    [self refreshLocalContacts];
+//                });
+//            }
         });
         
         // Update home data sources

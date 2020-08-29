@@ -163,7 +163,7 @@ final class BuildSettings: NSObject {
     
     static let allowSendingStickers: Bool = true
     
-    static let allowLocalContactsAccess: Bool = true
+    static let allowLocalContactsAccess: Bool = false
     
     
     // MARK: - Screen settings -

@@ -467,10 +467,10 @@
         }
         
         // Keep visible the header for the both contact sections, even if their are empty.
-        if (BuildSettings.allowLocalContactsAccess)
-        {
-            filteredLocalContactsSection = count++;
-        }
+//        if (BuildSettings.allowLocalContactsAccess)
+//        {
+//            filteredLocalContactsSection = count++;
+//        }
         filteredMatrixContactsSection = count++;
     }
     else
@@ -482,10 +482,10 @@
         }
         
         // Keep visible the local contact header, even if the section is empty.
-        if (BuildSettings.allowLocalContactsAccess)
-        {
-            filteredLocalContactsSection = count++;
-        }
+//        if (BuildSettings.allowLocalContactsAccess)
+//        {
+//            filteredLocalContactsSection = count++;
+//        }
     }
     
     
@@ -520,7 +520,6 @@
     // Prepare a contact cell here
     MXKContact *contact;
     BOOL showMatrixIdInDisplayName = NO;
-    
     if (indexPath.section == searchInputSection)
     {
         // Show what the user is typing in a cell. So that he can click on it

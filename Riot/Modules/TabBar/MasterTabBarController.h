@@ -28,10 +28,9 @@
 #import "ContactDetailsViewController.h"
 #import "GroupDetailsViewController.h"
 
-#define TABBAR_HOME_INDEX         0
-#define TABBAR_PEOPLE_INDEX       1
-#define TABBAR_ROOMS_INDEX        2
-#define TABBAR_COUNT              3
+#define TABBAR_PEOPLE_INDEX       0
+#define TABBAR_ROOMS_INDEX        1
+#define TABBAR_COUNT              2
 
 @interface MasterTabBarController : UITabBarController
 

@@ -500,7 +500,7 @@
    if ([list firstObject] != nil) {
      [self.authenticationActivityIndicator startAnimating];
      NSString *mobileNumber = [[list firstObject] stringByReplacingOccurrencesOfString:@"@" withString:@""];
-
+     [[NSUserDefaults standardUserDefaults] setValue:mobileNumber forKey:@"mobileNumber"];
      [CustomLoginModel sendLoginRequestWithMobileNumber:mobileNumber completionHandler:^(BOOL status, NSString * _Nullable sessionId, NSString * _Nullable error) {
        if (status) {
          NSLog(@"LoginSuccess");

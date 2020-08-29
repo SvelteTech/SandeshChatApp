@@ -28,9 +28,15 @@
     
     // Section indexes
     NSInteger participantsSection;
-    
+  
+    // User list section
+    NSInteger userListSection;
+  
     // The current list of participants.
     NSMutableArray<MXKContact*> *participants;
+  
+    // The current user list of Sandesh App Users
+    NSMutableArray<MXKContact*> *userLists;
     
     // Navigation bar items
     UIBarButtonItem *cancelBarButtonItem;
@@ -77,6 +83,9 @@
     
     // Prepare room participants
     participants = [NSMutableArray array];
+  
+    // Prepare user list
+    userLists = [NSMutableArray array];
     
     // Assign itself as delegate
     self.contactsTableViewControllerDelegate = self;
@@ -88,6 +97,7 @@
     // Do any additional setup after loading the view, typically from a nib.
 
     self.navigationItem.title = NSLocalizedStringFromTable(@"room_creation_title", @"Vector", nil);
+    [self fetchUserList];
     
     // Add each matrix session by default.
     NSArray *sessions = [AppDelegate theDelegate].mxSessions;
@@ -120,11 +130,36 @@
     
     // Hide line separators of empty cells
     self.contactsTableView.tableFooterView = [[UIView alloc] init];
-    
+    [self.contactsTableView registerClass:ContactTableViewCell.class forCellReuseIdentifier:@"UserListTableViewCellId"];
     [self.contactsTableView registerClass:ContactTableViewCell.class forCellReuseIdentifier:@"ParticipantTableViewCellId"];
     
     // Redirect table data source
     self.contactsTableView.dataSource = self;
+}
+
+- (void)fetchUserList
+{
+  [self.activityIndicator startAnimating];
+  [StartChatModel sendFetchListRequest:^(NSArray<Users *> * _Nullable users, NSString * _Nullable error) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self.activityIndicator stopAnimating];
+    });
+    if (users != nil) {
+      NSMutableArray<MXKContact*> *userListContact = [[NSMutableArray alloc] init];
+      for (NSUInteger index = 0; index < users.count; index++) {
+        MXKContact *contact = [[MXKContact alloc] initMatrixContactWithDisplayName:users[index].displayName matrixID:users[index].name andMatrixAvatarURL:users[index].avatarUrl];
+        [userListContact addObject:contact];
+      }
+      self->userLists = userListContact;
+      [[MXKContactManager sharedManager] sortAlphabeticallyContacts:self->userLists];
+      NSLog(@"Number of contacts - %lu", (unsigned long)users.count);
+    } else if (error != nil) {
+      NSLog(@"Error - %@", error);
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self.contactsTableView reloadData];
+    });
+  }];
 }
 
 - (void)userInterfaceThemeDidChange
@@ -163,7 +198,7 @@
     createBarButtonItem = nil;
     
     isMultiUseNameByDisplayName = nil;
-    
+    userLists = nil;
     participants = nil;
     
     [super destroy];
@@ -269,7 +304,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     NSInteger count = 0;
-    
+      
     if (_isAddParticipantSearchBarEditing)
     {
         participantsSection = -1;
@@ -279,6 +314,7 @@
     {
         participantsSection = count++;
     }
+    userListSection = count++;
     
     return count;
 }
@@ -286,8 +322,11 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger count = 0;
-    
-    if (_isAddParticipantSearchBarEditing)
+    if (section == userListSection)
+    {
+      count = userLists.count;
+    }
+    else if (_isAddParticipantSearchBarEditing)
     {
         count = [contactsDataSource tableView:tableView numberOfRowsInSection:section];
     }
@@ -302,8 +341,21 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell;
-    
-    if (_isAddParticipantSearchBarEditing)
+  
+    if (indexPath.section == userListSection)
+    {
+      MXKContact *contact = userLists[indexPath.row];
+      ContactTableViewCell* userListCell = [tableView dequeueReusableCellWithIdentifier:@"UserListTableViewCellId" forIndexPath:indexPath];
+      [userListCell render:contact];
+      // Add the right accessory view if any
+      userListCell.accessoryType = contactsDataSource.contactCellAccessoryType;
+      if (contactsDataSource.contactCellAccessoryImage)
+      {
+          userListCell.accessoryView = [[UIImageView alloc] initWithImage:contactsDataSource.contactCellAccessoryImage];
+      }
+      cell = userListCell;
+    }
+    else if (_isAddParticipantSearchBarEditing)
     {
         cell = [contactsDataSource tableView:tableView cellForRowAtIndexPath:indexPath];
     }
@@ -401,7 +453,10 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_isAddParticipantSearchBarEditing)
+    if (indexPath.section == userListSection) {
+      return 70;
+    }
+    else if (_isAddParticipantSearchBarEditing)
     {
         return [super tableView:tableView heightForRowAtIndexPath:indexPath];
     }
@@ -411,7 +466,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_isAddParticipantSearchBarEditing)
+    if (indexPath.section == userListSection) {
+      MXKContact *mxkContact = userLists[indexPath.row];
+      
+      if (mxkContact)
+      {
+          [self.contactsTableViewControllerDelegate contactsTableViewController:self didSelectContact:mxkContact];
+      
+          // Keep selected the cell by default.
+          return;
+      }
+    }
+    else if (_isAddParticipantSearchBarEditing)
     {
         [super tableView:tableView didSelectRowAtIndexPath:indexPath];
     }
@@ -453,8 +519,13 @@
     row --;
     
     if (row < participants.count)
-    {
+    {   MXKContact *contact = [participants objectAtIndex:row];
+        
         [participants removeObjectAtIndex:row];
+      
+        [userLists addObject:contact];
+      
+        [[MXKContactManager sharedManager] sortAlphabeticallyContacts:userLists];
         
         [self refreshParticipants];
         
@@ -708,6 +779,7 @@
     {
         // Update here the mutable list of participants
         [participants addObject:contact];
+        [userLists removeObject:contact];
     }
     
     // Refresh display by leaving search session

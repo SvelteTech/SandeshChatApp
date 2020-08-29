@@ -25,4 +25,6 @@ enum Constants {
   static let createPinURL = "http://23.100.84.74/app_api/index.php/Chat_register/savePin"
   static let twoFactorLoginURL = "https://2factor.in/API/V1/04eadd0e-cd76-11ea-9fa5-0200cd936042/SMS/+91"
   static let twoFactorVerifyOTPURL = "https://2factor.in/API/V1/04eadd0e-cd76-11ea-9fa5-0200cd936042/SMS/VERIFY"
+  static let userListURL = "https://voip.1punjab.com/_synapse/admin/v2/users?from=0"
+  static let accessToken = "MDAxOWxvY2F0aW9uIHNhbmRlc2gub3JnCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAzMmNpZCB1c2VyX2lkID0gQDgxNDcwNTA2MTRfc2FuZGVzaDpzYW5kZXNoLm9yZwowMDE2Y2lkIHR5cGUgPSBhY2Nlc3MKMDAyMWNpZCBub25jZSA9IGtUJkYmSFp6YytTVURKcyMKMDAyZnNpZ25hdHVyZSCT5lF1cEtCbhK9M4vsqhlvi6LdB_n57sEwtGY8nu9V2Qo"
 }

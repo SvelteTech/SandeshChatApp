@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#import <Contacts/Contacts.h>
+//#import <Contacts/Contacts.h>
 #import "PeopleViewController.h"
 
 #import "UIViewController+RiotSearch.h"
@@ -52,7 +52,7 @@
     directRoomsSectionNumber = 0;
     contactsSectionNumber = 0;
     
-    self.screenName = @"People";
+    self.screenName = @"Home";
 }
 
 - (void)viewDidLoad
@@ -101,22 +101,22 @@
 {
     [super viewWillAppear:animated];
 
-    if (BuildSettings.allowLocalContactsAccess)
-    {
-        // Check whether the access to the local contacts has not been already asked
-        // and check that the user has decided to use or not to use an identity server
-        if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusNotDetermined
-            || !contactsDataSource.mxSession.hasAccountDataIdentityServerValue)
-        {
-            // Allow by default the local contacts sync in order to discover matrix users.
-            // This setting change will trigger the loading of the local contacts, which will automatically
-            // ask user permission to access their local contacts.
-            [MXKAppSettings standardAppSettings].syncLocalContacts = YES;
-        }
-        
-        // Refresh the local contacts list.
-        [[MXKContactManager sharedManager] refreshLocalContacts];
-    }
+//    if (BuildSettings.allowLocalContactsAccess)
+//    {
+//        // Check whether the access to the local contacts has not been already asked
+//        // and check that the user has decided to use or not to use an identity server
+//        if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusNotDetermined
+//            || !contactsDataSource.mxSession.hasAccountDataIdentityServerValue)
+//        {
+//            // Allow by default the local contacts sync in order to discover matrix users.
+//            // This setting change will trigger the loading of the local contacts, which will automatically
+//            // ask user permission to access their local contacts.
+//            [MXKAppSettings standardAppSettings].syncLocalContacts = YES;
+//        }
+//
+//        // Refresh the local contacts list.
+//        [[MXKContactManager sharedManager] refreshLocalContacts];
+//    }
     
     [AppDelegate theDelegate].masterTabBarController.navigationItem.title = NSLocalizedStringFromTable(@"title_people", @"Vector", nil);
     [AppDelegate theDelegate].masterTabBarController.tabBar.tintColor = ThemeService.shared.theme.tintColor;
@@ -144,16 +144,16 @@
         recentsDataSource = (RecentsDataSource*)listDataSource;
     }
 
-    if (BuildSettings.allowLocalContactsAccess)
-    {
-        if (!contactsDataSource)
-        {
-            // Prepare its contacts data source
-            contactsDataSource = [[ContactsDataSource alloc] initWithMatrixSession:listDataSource.mxSession];
-            contactsDataSource.contactCellAccessoryImage = [[UIImage imageNamed: @"disclosure_icon"] vc_tintedImageUsingColor:ThemeService.shared.theme.textSecondaryColor];
-            contactsDataSource.delegate = self;
-        }
-    }
+//    if (BuildSettings.allowLocalContactsAccess)
+//    {
+//        if (!contactsDataSource)
+//        {
+//            // Prepare its contacts data source
+//            contactsDataSource = [[ContactsDataSource alloc] initWithMatrixSession:listDataSource.mxSession];
+//            contactsDataSource.contactCellAccessoryImage = [[UIImage imageNamed: @"disclosure_icon"] vc_tintedImageUsingColor:ThemeService.shared.theme.textSecondaryColor];
+//            contactsDataSource.delegate = self;
+//        }
+//    }
 }
 
 #pragma mark - MXKDataSourceDelegate
