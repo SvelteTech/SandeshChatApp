@@ -1428,8 +1428,10 @@
 "pin_protection_reset_alert_message" = "To reset your PIN, you'll need to re-login and create a new one";
 "pin_protection_reset_alert_action_reset" = "Reset";
 "pin_protection_mismatch_error_title" = "PINs don't match";
+"pin_protection_lastAttempt_error_title" = "This is your last attempt.";
 "pin_protection_mismatch_error_message" = "Pin is not matched. Please enter the same Pin.";
 "pin_protection_mismatch_too_many_times_error_message" = "If you can't remember your PIN, tap the forgot PIN button.";
+"pin_protection_lastAttempt_error_message" = "This is your last PIN attempt, after one wrong PIN attempt your account will be deactived.";
 "pin_protection_settings_section_header_x" = "PIN & %@";
 "pin_protection_settings_section_footer" = "To reset your PIN, you'll need to re-login and create a new one.";
 "pin_protection_settings_enabled_forced" = "PIN enabled";

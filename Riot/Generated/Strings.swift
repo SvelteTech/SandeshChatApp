@@ -1990,6 +1990,14 @@ internal enum VectorL10n {
   internal static var pinProtectionForgotPin: String { 
     return VectorL10n.tr("Vector", "pin_protection_forgot_pin") 
   }
+  /// This is your last PIN attempt, after one wrong PIN attempt your account will be deactived.
+  internal static var pinProtectionLastAttemptErrorMessage: String { 
+    return VectorL10n.tr("Vector", "pin_protection_lastAttempt_error_message") 
+  }
+  /// This is your last attempt.
+  internal static var pinProtectionLastAttemptErrorTitle: String { 
+    return VectorL10n.tr("Vector", "pin_protection_lastAttempt_error_title") 
+  }
   /// Pin is not matched. Please enter the same Pin.
   internal static var pinProtectionMismatchErrorMessage: String { 
     return VectorL10n.tr("Vector", "pin_protection_mismatch_error_message") 
