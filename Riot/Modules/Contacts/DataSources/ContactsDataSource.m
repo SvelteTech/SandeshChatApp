@@ -520,7 +520,6 @@
     // Prepare a contact cell here
     MXKContact *contact;
     BOOL showMatrixIdInDisplayName = NO;
-    
     if (indexPath.section == searchInputSection)
     {
         // Show what the user is typing in a cell. So that he can click on it

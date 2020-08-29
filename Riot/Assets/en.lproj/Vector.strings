@@ -181,7 +181,7 @@
 
 // People tab
 "people_invites_section" = "INVITES";
-"people_conversation_section" = "CONVERSATIONS";
+"people_conversation_section" = "PEOPLES";
 "people_no_conversation" = "No conversations";
 
 // Rooms tab
