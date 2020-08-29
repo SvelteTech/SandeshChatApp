@@ -139,12 +139,6 @@ typedef enum : NSUInteger
  */
 @property (nonatomic) NSMutableDictionary<NSString*, MXKContact*> *ignoredContactsByMatrixId;
 
-/*
- Show the sandesh user list once start the chat.
- */
-@property (nonatomic) NSMutableArray<MXKContact*> *userList;
-
-
 /**
  Filter the contacts list, by keeping only the contacts who have the search pattern
  as prefix in their display name, their matrix identifiers and/or their contact methods (emails, phones).

@@ -72,7 +72,6 @@
         
         _ignoredContactsByEmail = [NSMutableDictionary dictionary];
         _ignoredContactsByMatrixId = [NSMutableDictionary dictionary];
-        _userList = [NSMutableArray array];
         
         isMultiUseNameByDisplayName = [NSMutableDictionary dictionary];
         
@@ -104,7 +103,6 @@
     
     _ignoredContactsByEmail = nil;
     _ignoredContactsByMatrixId = nil;
-    _userList = nil;
     
     forceSearchResultRefresh = NO;
     

@@ -34,6 +34,9 @@
   
     // The current list of participants.
     NSMutableArray<MXKContact*> *participants;
+  
+    // The current user list of Sandesh App Users
+    NSMutableArray<MXKContact*> *userLists;
     
     // Navigation bar items
     UIBarButtonItem *cancelBarButtonItem;
@@ -80,6 +83,9 @@
     
     // Prepare room participants
     participants = [NSMutableArray array];
+  
+    // Prepare user list
+    userLists = [NSMutableArray array];
     
     // Assign itself as delegate
     self.contactsTableViewControllerDelegate = self;
@@ -144,7 +150,7 @@
         MXKContact *contact = [[MXKContact alloc] initMatrixContactWithDisplayName:users[index].displayName matrixID:users[index].name andMatrixAvatarURL:users[index].avatarUrl];
         [userListContact addObject:contact];
       }
-      self->contactsDataSource.userList = userListContact;
+      self->userLists = userListContact;
       NSLog(@"Number of contacts - %lu", (unsigned long)users.count);
     } else if (error != nil) {
       NSLog(@"Error - %@", error);
@@ -191,7 +197,7 @@
     createBarButtonItem = nil;
     
     isMultiUseNameByDisplayName = nil;
-    
+    userLists = nil;
     participants = nil;
     
     [super destroy];
@@ -317,7 +323,7 @@
     NSInteger count = 0;
     if (section == userListSection)
     {
-      count = contactsDataSource.userList.count;
+      count = userLists.count;
     }
     else if (_isAddParticipantSearchBarEditing)
     {
@@ -337,7 +343,7 @@
   
     if (indexPath.section == userListSection)
     {
-      MXKContact *contact = contactsDataSource.userList[indexPath.row];
+      MXKContact *contact = userLists[indexPath.row];
       ContactTableViewCell* userListCell = [tableView dequeueReusableCellWithIdentifier:@"UserListTableViewCellId" forIndexPath:indexPath];
       [userListCell render:contact];
       // Add the right accessory view if any
@@ -460,7 +466,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == userListSection) {
-      MXKContact *mxkContact = contactsDataSource.userList[indexPath.row];
+      MXKContact *mxkContact = userLists[indexPath.row];
       
       if (mxkContact)
       {
