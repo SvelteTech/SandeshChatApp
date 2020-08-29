@@ -116,8 +116,12 @@ final class EnterPinCodeViewModel: EnterPinCodeViewModelType {
                         numberOfFailuresDuringEnterPIN += 1
                         if numberOfFailuresDuringEnterPIN < pinCodePreferences.allowedNumberOfTrialsBeforeAlert {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                              if self.numberOfFailuresDuringEnterPIN == self.pinCodePreferences.allowedNumberOfTrialsBeforeAlert - 1 {
+                                                                self.viewDelegate?.enterPinCodeViewModel(self, didUpdateViewState: .lastAttempt)
+                              } else {
                                 self.viewDelegate?.enterPinCodeViewModel(self, didUpdateViewState: .wrongPin)
-                                self.currentPin.removeAll()
+                              }
+                              self.currentPin.removeAll()
                             }
                         } else {
                             viewDelegate?.enterPinCodeViewModel(self, didUpdateViewState: .wrongPinTooManyTimes)

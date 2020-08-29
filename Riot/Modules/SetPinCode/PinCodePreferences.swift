@@ -56,7 +56,7 @@ final class PinCodePreferences: NSObject {
     }
     
     /// Allowed number of PIN trials before showing forgot help alert
-    let allowedNumberOfTrialsBeforeAlert: Int = 5
+    let allowedNumberOfTrialsBeforeAlert: Int = 3
     
     /// Max allowed time to continue using the app without prompting PIN
     let graceTimeInSeconds: TimeInterval = 120

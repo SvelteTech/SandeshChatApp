@@ -25,6 +25,7 @@ enum EnterPinCodeViewState {
     case pinsDontMatch          //  pins don't match
     case unlock            //  after pin has been set, enter pin to unlock
     case wrongPin               //  after pin has been set, pin entered wrongly
+    case lastAttempt            // After that account is deactivated.
     case wrongPinTooManyTimes   //  after pin has been set, pin entered wrongly too many times
     case forgotPin              //  after pin has been set, user tapped forgot pin
     case confirmPinToDisable    //  after pin has been set, confirm pin to disable pin

@@ -182,6 +182,8 @@ final class EnterPinCodeViewController: UIViewController {
             self.renderUnlockByPin()
         case .wrongPin:
             self.renderWrongPin()
+        case .lastAttempt:
+          self.renderLastPinAttempt()
         case .wrongPinTooManyTimes:
             self.renderWrongPinTooManyTimes()
         case .forgotPin:
@@ -232,6 +234,14 @@ final class EnterPinCodeViewController: UIViewController {
         self.activityPresenter.removeCurrentActivityIndicator(animated: true)
         self.errorPresenter.presentError(from: self, for: error, animated: true, handler: nil)
     }
+  
+  private func renderLastPinAttempt() {
+      let error = MXKErrorViewModel(title: VectorL10n.pinProtectionLastAttemptErrorTitle,
+                                    message: VectorL10n.pinProtectionLastAttemptErrorMessage)
+      
+      self.activityPresenter.removeCurrentActivityIndicator(animated: true)
+      self.errorPresenter.presentError(from: self, for: error, animated: true, handler: nil)
+  }
     
     private func renderForgotPin() {
         let controller = UIAlertController(title: VectorL10n.pinProtectionResetAlertTitle,
