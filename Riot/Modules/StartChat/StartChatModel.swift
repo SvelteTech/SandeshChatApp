@@ -44,15 +44,17 @@ class StartChatModel: NSObject {
           let displayname = user["displayname"] as? String {
           let userType = user["user_type"] as? String
           let avatar_url = user["avatar_url"] as? String
-          let user = Users()
-          user.name = name
-          user.isGuest = isGuest == 0 ? false: true
-          user.isAdmin = admin == 0 ? false : true
-          user.isDeactivated = deactivated == 0 ? false : true
-          user.displayName = displayname
-          user.userType = userType
-          user.avatarUrl = avatar_url
-          users.append(user)
+          if admin == 0 {
+            let user = Users()
+            user.name = name
+            user.isGuest = isGuest == 0 ? false: true
+            user.isAdmin = admin == 0 ? false : true
+            user.isDeactivated = deactivated == 0 ? false : true
+            user.displayName = displayname
+            user.userType = userType
+            user.avatarUrl = avatar_url
+            users.append(user)
+          }
         }
       }
       let responseModel = UserModel()
