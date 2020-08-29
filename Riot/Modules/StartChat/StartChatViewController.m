@@ -151,6 +151,7 @@
         [userListContact addObject:contact];
       }
       self->userLists = userListContact;
+      [[MXKContactManager sharedManager] sortAlphabeticallyContacts:self->userLists];
       NSLog(@"Number of contacts - %lu", (unsigned long)users.count);
     } else if (error != nil) {
       NSLog(@"Error - %@", error);
@@ -518,8 +519,13 @@
     row --;
     
     if (row < participants.count)
-    {
+    {   MXKContact *contact = [participants objectAtIndex:row];
+        
         [participants removeObjectAtIndex:row];
+      
+        [userLists addObject:contact];
+      
+        [[MXKContactManager sharedManager] sortAlphabeticallyContacts:userLists];
         
         [self refreshParticipants];
         
@@ -773,6 +779,7 @@
     {
         // Update here the mutable list of participants
         [participants addObject:contact];
+        [userLists removeObject:contact];
     }
     
     // Refresh display by leaving search session
