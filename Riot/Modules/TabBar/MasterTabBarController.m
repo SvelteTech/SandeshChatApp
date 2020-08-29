@@ -402,7 +402,7 @@
 {
     [self refreshTabBarBadges];
     
-    [self presentReviewSessionsAlertIfNeeded];
+//    [self presentReviewSessionsAlertIfNeeded];
 }
 
 - (void)showAuthenticationScreen
