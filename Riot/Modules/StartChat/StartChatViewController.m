@@ -88,7 +88,7 @@
     // Do any additional setup after loading the view, typically from a nib.
 
     self.navigationItem.title = NSLocalizedStringFromTable(@"room_creation_title", @"Vector", nil);
-  [self fetchUserList];
+    [self fetchUserList];
     
     // Add each matrix session by default.
     NSArray *sessions = [AppDelegate theDelegate].mxSessions;
@@ -136,6 +136,17 @@
       [self.activityIndicator stopAnimating];
     });
     if (users != nil) {
+      for (NSUInteger index = 0; index < users.count; index++) {
+        MXKContact *contact = [[MXKContact alloc] initMatrixContactWithDisplayName:users[index].displayName matrixID:users[index].name andMatrixAvatarURL:users[index].avatarUrl];
+//        [self->participants addObject:contact];
+        
+      }
+//      dispatch_async(dispatch_get_main_queue(), ^{
+//        if (self.contactsTableView.dataSource)
+//        {
+//          [self.contactsTableView reloadData];
+//        }
+//      });
       NSLog(@"Users[0] - %@", users[0].displayName);
     } else if (error != nil) {
       NSLog(@"Error - %@", error);
