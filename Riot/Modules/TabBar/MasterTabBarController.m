@@ -118,7 +118,7 @@
     childViewControllers = [NSMutableArray array];
     
     // Initialize here the data sources if a matrix session has been already set.
-    [self initializeDataSources];
+//    [self initializeDataSources];
     
     // Observe user interface theme change.
     kThemeServiceDidChangeThemeNotificationObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kThemeServiceDidChangeThemeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notif) {
@@ -153,6 +153,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self initializeDataSources];
     // Show the tab bar view controller content only when a user is logged in.
     self.hidden = ([MXKAccountManager sharedManager].accounts.count == 0);
 }
@@ -301,8 +302,8 @@
 //            case TABBAR_HOME_INDEX:
 //                break;
             case TABBAR_PEOPLE_INDEX:
-//                recentsDataSourceDelegate = _peopleViewController;
-//                recentsDataSourceMode = RecentsDataSourceModePeople;
+                recentsDataSourceDelegate = _peopleViewController;
+                recentsDataSourceMode = RecentsDataSourceModePeople;
                 break;
             case TABBAR_ROOMS_INDEX:
                 recentsDataSourceDelegate = _roomsViewController;

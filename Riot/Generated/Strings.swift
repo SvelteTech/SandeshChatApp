@@ -1954,7 +1954,7 @@ internal enum VectorL10n {
   internal static var or: String { 
     return VectorL10n.tr("Vector", "or") 
   }
-  /// CONVERSATIONS
+  /// PEOPLES
   internal static var peopleConversationSection: String { 
     return VectorL10n.tr("Vector", "people_conversation_section") 
   }
