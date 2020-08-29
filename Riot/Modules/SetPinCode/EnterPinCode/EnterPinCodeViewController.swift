@@ -20,12 +20,6 @@ import UIKit
 
 final class EnterPinCodeViewController: UIViewController {
     
-    // MARK: - Constants
-    
-    private enum Constants {
-        static let aConstant: Int = 666
-    }
-    
     // MARK: - Properties
     
     // MARK: Outlets
@@ -228,11 +222,21 @@ final class EnterPinCodeViewController: UIViewController {
     }
     
     private func renderWrongPinTooManyTimes() {
-        let error = MXKErrorViewModel(title: VectorL10n.pinProtectionMismatchErrorTitle,
-                                      message: VectorL10n.pinProtectionMismatchTooManyTimesErrorMessage)
-        
-        self.activityPresenter.removeCurrentActivityIndicator(animated: true)
-        self.errorPresenter.presentError(from: self, for: error, animated: true, handler: nil)
+      if let mobileNumber = UserDefault.retrieve("mobileNumber") as? String,
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+        let mainSession = appDelegate.mxSessions.first as? MXSession {
+        let userId = "@" + mobileNumber + Constants.userIdPostfix
+        let authParameters = ["user": userId,
+                              "password": Constants.password,
+                              "type": kMXLoginFlowTypePassword]
+        ActivityIndicator.shared.start(view)
+        mainSession.deactivateAccount(withAuthParameters: authParameters, eraseAccount: false) { _ in
+          appDelegate.logoutSendingRequestServer(false) { status in
+            ActivityIndicator.shared.stop(self.view)
+            debugPrint("EnterPinCodeController - Complete clear user data after account deactivation")
+          }
+        }
+      }
     }
   
   private func renderLastPinAttempt() {
