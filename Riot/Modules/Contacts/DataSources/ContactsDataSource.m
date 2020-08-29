@@ -72,6 +72,7 @@
         
         _ignoredContactsByEmail = [NSMutableDictionary dictionary];
         _ignoredContactsByMatrixId = [NSMutableDictionary dictionary];
+        _userList = [NSMutableArray array];
         
         isMultiUseNameByDisplayName = [NSMutableDictionary dictionary];
         
@@ -103,6 +104,7 @@
     
     _ignoredContactsByEmail = nil;
     _ignoredContactsByMatrixId = nil;
+    _userList = nil;
     
     forceSearchResultRefresh = NO;
     
@@ -520,7 +522,6 @@
     // Prepare a contact cell here
     MXKContact *contact;
     BOOL showMatrixIdInDisplayName = NO;
-    
     if (indexPath.section == searchInputSection)
     {
         // Show what the user is typing in a cell. So that he can click on it

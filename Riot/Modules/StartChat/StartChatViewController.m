@@ -28,7 +28,10 @@
     
     // Section indexes
     NSInteger participantsSection;
-    
+  
+    // User list section
+    NSInteger userListSection;
+  
     // The current list of participants.
     NSMutableArray<MXKContact*> *participants;
     
@@ -121,7 +124,7 @@
     
     // Hide line separators of empty cells
     self.contactsTableView.tableFooterView = [[UIView alloc] init];
-    
+    [self.contactsTableView registerClass:ContactTableViewCell.class forCellReuseIdentifier:@"UserListTableViewCellId"];
     [self.contactsTableView registerClass:ContactTableViewCell.class forCellReuseIdentifier:@"ParticipantTableViewCellId"];
     
     // Redirect table data source
@@ -136,21 +139,19 @@
       [self.activityIndicator stopAnimating];
     });
     if (users != nil) {
+      NSMutableArray<MXKContact*> *userListContact = [[NSMutableArray alloc] init];
       for (NSUInteger index = 0; index < users.count; index++) {
         MXKContact *contact = [[MXKContact alloc] initMatrixContactWithDisplayName:users[index].displayName matrixID:users[index].name andMatrixAvatarURL:users[index].avatarUrl];
-//        [self->participants addObject:contact];
-        
+        [userListContact addObject:contact];
       }
-//      dispatch_async(dispatch_get_main_queue(), ^{
-//        if (self.contactsTableView.dataSource)
-//        {
-//          [self.contactsTableView reloadData];
-//        }
-//      });
-      NSLog(@"Users[0] - %@", users[0].displayName);
+      self->contactsDataSource.userList = userListContact;
+      NSLog(@"Number of contacts - %lu", (unsigned long)users.count);
     } else if (error != nil) {
       NSLog(@"Error - %@", error);
     }
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self.contactsTableView reloadData];
+    });
   }];
 }
 
@@ -296,7 +297,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     NSInteger count = 0;
-    
+      
     if (_isAddParticipantSearchBarEditing)
     {
         participantsSection = -1;
@@ -306,6 +307,7 @@
     {
         participantsSection = count++;
     }
+    userListSection = count++;
     
     return count;
 }
@@ -313,8 +315,11 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger count = 0;
-    
-    if (_isAddParticipantSearchBarEditing)
+    if (section == userListSection)
+    {
+      count = contactsDataSource.userList.count;
+    }
+    else if (_isAddParticipantSearchBarEditing)
     {
         count = [contactsDataSource tableView:tableView numberOfRowsInSection:section];
     }
@@ -329,8 +334,21 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell;
-    
-    if (_isAddParticipantSearchBarEditing)
+  
+    if (indexPath.section == userListSection)
+    {
+      MXKContact *contact = contactsDataSource.userList[indexPath.row];
+      ContactTableViewCell* userListCell = [tableView dequeueReusableCellWithIdentifier:@"UserListTableViewCellId" forIndexPath:indexPath];
+      [userListCell render:contact];
+      // Add the right accessory view if any
+      userListCell.accessoryType = contactsDataSource.contactCellAccessoryType;
+      if (contactsDataSource.contactCellAccessoryImage)
+      {
+          userListCell.accessoryView = [[UIImageView alloc] initWithImage:contactsDataSource.contactCellAccessoryImage];
+      }
+      cell = userListCell;
+    }
+    else if (_isAddParticipantSearchBarEditing)
     {
         cell = [contactsDataSource tableView:tableView cellForRowAtIndexPath:indexPath];
     }
@@ -428,7 +446,10 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_isAddParticipantSearchBarEditing)
+    if (indexPath.section == userListSection) {
+      return 70;
+    }
+    else if (_isAddParticipantSearchBarEditing)
     {
         return [super tableView:tableView heightForRowAtIndexPath:indexPath];
     }
@@ -438,7 +459,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_isAddParticipantSearchBarEditing)
+    if (indexPath.section == userListSection) {
+      MXKContact *mxkContact = contactsDataSource.userList[indexPath.row];
+      
+      if (mxkContact)
+      {
+          [self.contactsTableViewControllerDelegate contactsTableViewController:self didSelectContact:mxkContact];
+      
+          // Keep selected the cell by default.
+          return;
+      }
+    }
+    else if (_isAddParticipantSearchBarEditing)
     {
         [super tableView:tableView didSelectRowAtIndexPath:indexPath];
     }
