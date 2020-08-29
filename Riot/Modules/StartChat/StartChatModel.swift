@@ -33,6 +33,10 @@ class StartChatModel: NSObject {
   
   private static func parseJsonResponse(_ data: Data) -> UserModel? {
     var users = [Users]()
+    var mobileNumber = ""
+    if let mobNumber = UserDefault.retrieve("mobileNumber") as? String {
+      mobileNumber = mobNumber
+    }
     if let jsonResponse = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
       let count = jsonResponse["total"] as? Int,
        let usersResponse = jsonResponse["users"] as? [[String: Any]] {
@@ -44,7 +48,7 @@ class StartChatModel: NSObject {
           let displayname = user["displayname"] as? String {
           let userType = user["user_type"] as? String
           let avatar_url = user["avatar_url"] as? String
-          if admin == 0 {
+          if admin == 0, !name.contains(mobileNumber) {
             let user = Users()
             user.name = name
             user.isGuest = isGuest == 0 ? false: true
