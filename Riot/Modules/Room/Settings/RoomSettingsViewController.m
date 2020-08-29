@@ -51,7 +51,7 @@ enum
     ROOM_SETTINGS_MAIN_SECTION_ROW_NAME,
     ROOM_SETTINGS_MAIN_SECTION_ROW_TOPIC,
     ROOM_SETTINGS_MAIN_SECTION_ROW_TAG ,
-    ROOM_SETTINGS_MAIN_SECTION_ROW_DIRECT_CHAT,
+//    ROOM_SETTINGS_MAIN_SECTION_ROW_DIRECT_CHAT,
     ROOM_SETTINGS_MAIN_SECTION_ROW_MUTE_NOTIFICATIONS,
     ROOM_SETTINGS_MAIN_SECTION_ROW_LEAVE,
     ROOM_SETTINGS_MAIN_SECTION_ROW_COUNT
@@ -2117,25 +2117,25 @@ NSString *const kRoomSettingsAdvancedE2eEnabledCellViewIdentifier = @"kRoomSetti
             
             cell = roomNotifCell;
         }
-        else if (row == ROOM_SETTINGS_MAIN_SECTION_ROW_DIRECT_CHAT)
-        {
-            MXKTableViewCellWithLabelAndSwitch *roomDirectChat = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
-            
-            [roomDirectChat.mxkSwitch addTarget:self action:@selector(toggleDirectChat:) forControlEvents:UIControlEventValueChanged];
-            
-            roomDirectChat.mxkLabel.text = NSLocalizedStringFromTable(@"room_details_direct_chat", @"Vector", nil);
-            
-            if (updatedItemsDict[kRoomSettingsDirectChatKey])
-            {
-                roomDirectChat.mxkSwitch.on = ((NSNumber*) updatedItemsDict[kRoomSettingsDirectChatKey]).boolValue;
-            }
-            else
-            {
-                roomDirectChat.mxkSwitch.on = mxRoom.isDirect;
-            }
-            
-            cell = roomDirectChat;
-        }
+//        else if (row == ROOM_SETTINGS_MAIN_SECTION_ROW_DIRECT_CHAT)
+//        {
+//            MXKTableViewCellWithLabelAndSwitch *roomDirectChat = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
+//            
+//            [roomDirectChat.mxkSwitch addTarget:self action:@selector(toggleDirectChat:) forControlEvents:UIControlEventValueChanged];
+//            
+//            roomDirectChat.mxkLabel.text = NSLocalizedStringFromTable(@"room_details_direct_chat", @"Vector", nil);
+//            
+//            if (updatedItemsDict[kRoomSettingsDirectChatKey])
+//            {
+//                roomDirectChat.mxkSwitch.on = ((NSNumber*) updatedItemsDict[kRoomSettingsDirectChatKey]).boolValue;
+//            }
+//            else
+//            {
+//                roomDirectChat.mxkSwitch.on = mxRoom.isDirect;
+//            }
+//            
+//            cell = roomDirectChat;
+//        }
         else if (row == ROOM_SETTINGS_MAIN_SECTION_ROW_PHOTO)
         {
             MXKTableViewCellWithLabelAndMXKImageView *roomPhotoCell = [tableView dequeueReusableCellWithIdentifier:[MXKTableViewCellWithLabelAndMXKImageView defaultReuseIdentifier] forIndexPath:indexPath];
